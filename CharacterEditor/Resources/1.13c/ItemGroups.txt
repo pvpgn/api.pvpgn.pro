@@ -1,0 +1,599 @@
+[armor]
+cap Cap/hat
+skp Skull Cap
+hlm Helm
+fhl Full Helm
+ghm Great Helm
+crn Crown
+msk Mask
+qui Quilted Armor
+lea Leather Armor
+hla Hard Leather Armor
+stu Studded Leather 
+rng Ring Mail
+scl Scale Mail
+chn Chain Mail
+brs Breast Plate
+spl Splint Mail
+plt Plate Mail
+fld Field Plate
+gth Gothic Plate
+ful Full Plate Mail
+aar Ancient Armor
+ltp Light Plate
+buc Buckler
+sml Small Shield
+lrg Large Shield
+kit Kite Shield
+tow Tower Shield
+gts Gothic Shield
+lgl Gloves(L)
+vgl Heavy Gloves
+mgl Bracers(M)
+tgl Light Gauntlets
+hgl Gaunlets(H)
+lbt Leather Boots
+vbt Heavy Boots
+mbt Chain Boots
+tbt Light Plate Boots
+hbt Plate Boots
+lbl Sash(L)
+vbl Light Belt
+mbl Belt(M)
+tbl Heavy Belt
+hbl Girdle(H)
+bhm Bone Helm
+bsh Bone Shield
+spk Spiked Shield
+xap War Hat
+xkp Sallet
+xlm Casque
+xhl Basinet
+xhm Winged Helm
+xrn Grand Crown
+xsk Death Mask
+xui Ghost Armor
+xea Serpentskin Armor
+xla Demonhide Armor
+xtu Trellised Armor
+xng Linked Mail
+xcl Tigulated Mail
+xhn Mesh Armor
+xrs Cuirass
+xpl Russet Armor
+xlt Templar Coat
+xld Sharktooth Armor
+xth Embossed Plate
+xul Chaos Armor
+xar Ornate Armor
+xtp Mage Plate
+xuc Defender
+xml Round Shield
+xrg Scutum
+xit Dragon Shield
+xow Pavise
+xts Ancient Shield
+xlg Demonhide Gloves
+xvg Sharkskin Gloves
+xmg Heavy Bracers
+xtg Battle Gauntlets
+xhg War Gauntlets
+xlb Demonhide Boots
+xvb Sharkskin Boots
+xmb Mesh Boots
+xtb Battle Boots
+xhb War Boots
+zlb Demonhide Sash
+zvb Sharkskin Belt
+zmb Mesh Belt
+ztb Battle Belt
+zhb War Belt
+xh9 Grim Helm
+xsh Grim Shield
+xpk Barbed Shield
+dr1 Wolf Head
+dr2 Hawk Helm
+dr3 Antlers
+dr4 Falcon Mask
+dr5 Spirit Mask
+ba1 Jawbone Cap
+ba2 Fanged Helm
+ba3 Horned Helm
+ba4 Assault Helmet
+ba5 Avenger Guard
+pa1 Targe
+pa2 Rondache
+pa3 Heraldic Shield
+pa4 Aerin Shield
+pa5 Crown Shield
+ne1 Preserved Head
+ne2 Zombie Head
+ne3 Unraveller Head
+ne4 Gargoyle Head
+ne5 Demon Head
+ci0 Circlet
+ci1 Coronet
+ci2 Tiara
+ci3 Diadem
+uap Shako
+ukp Hydraskull
+ulm Armet
+uhl Giant Conch
+uhm Spired Helm
+urn Corona
+usk Demonhead
+uui Dusk Shroud
+uea Wyrmhide
+ula Scarab Husk
+utu Wire Fleece
+ung Diamond Mail
+ucl Loricated Mail
+uhn Boneweave
+urs Great Hauberk
+upl Balrog Skin
+ult Hellforged Plate
+uld Kraken Shell
+uth Lacquered Plate
+uul Shadow Plate
+uar Sacred Armor
+utp Archon Plate
+uuc Heater
+uml Luna
+urg Hyperion
+uit Monarch
+uow Aegis
+uts Ward
+ulg Bramble Mitts
+uvg Vampirebone Gloves
+umg Vambraces
+utg Crusader Gauntlets
+uhg Ogre Gauntlets
+ulb Wyrmhide Boots
+uvb Scarabshell Boots
+umb Boneweave Boots
+utb Mirrored Boots
+uhb Myrmidon Greaves
+ulc Spiderweb Sash
+uvc Vampirefang Belt
+umc Mithril Coil
+utc Troll Belt
+uhc Colossus Girdle
+uh9 Bone Visage
+ush Troll Nest
+upk Blade Barrier
+dr6 Alpha Helm
+dr7 Griffon Headress
+dr8 Hunter's Guise
+dr9 Sacred Feathers
+dra Totemic Mask
+ba6 Jawbone Visor
+ba7 Lion Helm
+ba8 Rage Mask
+ba9 Savage Helmet
+baa Slayer Guard
+pa6 Akaran Targe
+pa7 Akaran Rondache
+pa8 Protector Shield
+pa9 Guilded Shield
+paa Royal Shield
+ne6 Mummified Trophy
+ne7 Fetish Trophy
+ne8 Sexton Trophy
+ne9 Cantor Trophy
+nea Heirophant Trophy
+drb Blood Spirt
+drc Sun Spirit
+drd Earth Spirit
+dre Sky Spirit
+drf Dream Spirit
+bab Carnage Helm
+bac Fury Visor
+bad Destroyer Helm
+bae Conquerer Crown
+baf Guardian Crown
+pab Sacred Targe
+pac Sacred Rondache
+pad Ancient Shield
+pae Zakarum Shield
+paf Vortex Shield
+neb Minion Skull
+neg Hellspawn Skull
+ned Overseer Skull
+nee Succubae Skull
+nef Bloodlord Skull
+
+
+[weapons]
+hax Hand Axe
+axe Axe
+2ax Double Axe
+mpi Military Pick
+wax War Axe
+lax Large Axe
+bax Broad Axe 
+btx Battle Axe
+gax Great Axe
+gix Giant Axe
+wnd Wand
+ywn Yew Wand
+bwn Bone Wand
+gwn Grim Wand
+clb Club
+scp Scepter
+gsc Grand Scepter
+wsp War Scepter
+spc Spiked Club
+mac Mace
+mst Morning Star
+fla Flail
+whm War Hammer
+mau Maul
+gma Great Maul
+ssd Short Sword
+scm Scimitar
+sbr Saber
+flc Falchion
+crs Crystal Sword
+bsd Broad Sword
+lsd Long Sword 
+wsd War Sword
+2hs Two-Handed Sword
+clm Claymore
+gis Giant Sword
+bsw Bastard Sword
+flb Flamberge
+gsd Great Sword
+dgr Dagger
+dir Dirk
+kri Kriss
+bld Blade
+tkf Throwing Knife
+tax Throwing Axe
+bkf Balanced Knife
+bal Balanced Axe
+jav Javelin
+pil Pilum
+ssp Short Spear
+glv Glaive
+tsp Throwing Spear
+spr Spear
+tri Trident
+brn Brandistock
+spt Spetum
+pik Pike
+bar Bardiche
+vou Voulge
+scy Scythe
+pax Poleaxe
+hal Halberd
+wsc War Scythe
+sst Short Staff
+lst Long Staff
+cst Gnarled Staff
+bst Battle Staff
+wst War Staff
+sbw Short Bow
+hbw Hunter's Bow
+lbw Long Bow
+cbw Composite Bow
+sbb Short Battle Bow
+lbb Long Battle Bow
+swb Short War Bow
+lwb Long War Bow
+lxb Light Crossbow
+mxb Crossbow
+hxb Heavy Crossbow
+rxb Repeating Crossbow
+gps Rancid Gas Potion
+ops Oil Potion
+gpm Choking Gas Potion
+opm Exploding Potion
+gpl Strangling Gas Potion
+opl Fulminating Potion
+d33 decoy dagger
+g33 Gidbinn
+leg Wirt's Leg
+hdm Horadric Malus
+hfh Hellforge Hammer
+hst Horadric Staff
+msf Staff of the Kings
+9ha Hatchet
+9ax Cleaver
+92a Twin Axe
+9mp Crowbill
+9wa Naga
+9la Military Axe
+9ba Bearded Axe 
+9bt Tabar
+9ga Gothic Axe
+9gi Ancient Axe
+9wn Burnt Wand
+9yw Petrified Wand
+9bw Tomb Wand
+9gw Grave Wand
+9cl Cudgel
+9sc Rune Scepter
+9qs Holy Water Sprinkler
+9ws Divine Scepter
+9sp Barbed Club
+9ma Flanged Mace
+9mt Jagged Star
+9fl Knout
+9wh Battle Hammer
+9m9 War Club
+9gm Martel de Fer
+9ss Gladius
+9sm Cutlass
+9sb Shamshir
+9fc Tulwar
+9cr Dimensional Blade
+9bs Battle Sword
+9ls Rune Sword
+9wd Ancient Sword
+92h Espadon
+9cm Dacian Falx
+9gs Tusk Sword
+9b9 Gothic Sword
+9fb Zweihander
+9gd Executioner Sword
+9dg Poignard
+9di Rondel
+9kr Cinquedeas
+9bl Stilleto
+9tk Battle Dart
+9ta Francisca
+9bk War Dart
+9b8 Hurlbat
+9ja War Javelin
+9pi Great Pilum
+9s9 Simbilan
+9gl Spiculum
+9ts Harpoon
+9sr War Spear
+9tr Fuscina
+9br War Fork
+9st Yari
+9p9 Lance
+9b7 Lochaber Axe
+9vo Bill
+9s8 Battle Scythe
+9pa Partizan
+9h9 Bec-de-Corbin
+9wc Grim Scythe
+8ss Jo Staff
+8ls Quarterstaff
+8cs Cedar Staff
+8bs Gothic Staff
+8ws Rune Staff
+8sb Edge Bow
+8hb Razor Bow
+8lb Cedar Bow
+8cb Double Bow
+8s8 Short Siege Bow
+8l8 Long Siege Bow
+8sw Rune Bow
+8lw Gothic Bow
+8lx Arbalest
+8mx Siege Crossbow
+8hx Balista
+8rx Chu-Ko-Nu
+qf1 KhalimFlail
+qf2 SuperKhalimFlail
+ktr Katar
+wrb Wrist Blade
+axf Hatchet Hands
+ces Cestus
+clw Claws
+btl Blade Talons
+skr Scissors Katar
+9ar Quhab
+9wb Wrist Spike
+9xf Fascia
+9cs Hand Scythe
+9lw Greater Claws
+9tw Greater Talons
+9qr Scissors Quhab
+7ar Suwayyah
+7wb Wrist Sword
+7xf War Fist
+7cs Battle Cestus
+7lw Feral Claws
+7tw Runic Talons
+7qr Scissors Suwayyah
+7ha Tomahawk
+7ax Small Crescent
+72a Ettin Axe
+7mp War Spike
+7wa Berserker Axe
+7la Feral Axe
+7ba Silver Edged Axe
+7bt Decapitator
+7ga Champion Axe
+7gi Glorious Axe
+7wn Polished Wand
+7yw Ghost Wand
+7bw Lich Wand
+7gw Unearthed Wand
+7cl Truncheon
+7sc Mighty Scepter
+7qs Seraph Rod
+7ws Caduceus
+7sp Tyrant Club
+7ma Reinforced Mace
+7mt Devil Star
+7fl Scourge
+7wh Legendary Mallet
+7m7 Ogre Maul
+7gm Thunder Maul
+7ss Falcata
+7sm Ataghan
+7sb Elegant Blade
+7fc Hydra Edge
+7cr Phase Blade
+7bs Conquest Sword
+7ls Cryptic Sword
+7wd Mythical Sword
+72h Legend Sword
+7cm Highland Blade
+7gs Balrog Blade
+7b7 Champion Sword
+7fb Colossal Sword
+7gd Colossus Blade
+7dg Bone Knife
+7di Mithral Point
+7kr Fanged Knife
+7bl Legend Spike
+7tk Flying Knife
+7ta Flying Axe
+7bk Winged Knife
+7b8 Winged Axe
+7ja Hyperion Javelin
+7pi Stygian Pilum
+7s7 Balrog Spear
+7gl Ghost Glaive
+7ts Winged Harpoon
+7sr Hyperion Spear
+7tr Stygian Pike
+7br Mancatcher
+7st Ghost Spear
+7p7 War Pike
+7o7 Ogre Axe
+7vo Colossus Voulge
+7s8 Thresher
+7pa Cryptic Axe
+7h7 Great Poleaxe
+7wc Giant Thresher
+6ss Walking Stick
+6ls Stalagmite
+6cs Elder Staff
+6bs Shillelah
+6ws Archon Staff
+6sb Spider Bow
+6hb Blade Bow
+6lb Shadow Bow
+6cb Great Bow
+6s7 Diamond Bow
+6l7 Crusader Bow
+6sw Ward Bow
+6lw Hydra Bow
+6lx Pellet Bow
+6mx Gorgon Crossbow
+6hx Colossus Crossbow
+6rx Demon Crossbow
+ob1 Eagle Orb
+ob2 Sacred Globe
+ob3 Smoked Sphere
+ob4 Clasped Orb
+ob5 Dragon Stone
+am1 Stag Bow
+am2 Reflex Bow
+am3 Maiden Spear
+am4 Maiden Pike
+am5 Maiden Javelin
+ob6 Glowing Orb
+ob7 Crystalline Globe
+ob8 Cloudy Sphere
+ob9 Sparkling Ball
+oba Swirling Crystal
+am6 Ashwood Bow
+am7 Ceremonial Bow
+am8 Ceremonial Spear
+am9 Ceremonial Pike
+ama Ceremonial Javelin
+obb Heavenly Stone
+obc Eldritch Orb
+obd Demon Heart
+obe Vortex Orb
+obf Dimensional Shard
+amb Matriarchal Bow
+amc Grand Matron Bow
+amd Matriarchal Spear
+ame Matriarchal Pike
+amf MatriarchalJavelin
+
+
+[stackable]
+tbk Town Portal Book
+ibk Identify Book
+gld gold
+aqv Arrows
+cqv Bolts
+key Skeleton Key
+rps Small Red Potion
+rpl Large Red Potion
+bps Small Blue Potion
+bpl Large Blue Potion
+tkf Throwing Knife
+tax Throwing Axe
+bkf Balanced Knife
+bal Balanced Axe
+jav Javelin
+pil Pilum
+ssp Short Spear
+glv Glaive
+tsp Throwing Spear
+gps Rancid Gas Potion
+ops Oil Potion
+gpm Choking Gas Potion
+opm Exploding Potion
+gpl Strangling Gas Potion
+opl Fulminating Potion
+9tk Battle Dart
+9ta Francisca
+9bk War Dart
+9b8 Hurlbat
+9ja War Javelin
+9pi Great Pilum
+9s9 Simbilan
+9gl Spiculum
+9ts Harpoon
+7tk Flying Knife
+7ta Flying Axe
+7bk Winged Knife
+7b8 Winged Axe
+7ja Hyperion Javelin
+7pi Stygian Pilum
+7s7 Balrog Spear
+7gl Ghost Glaive
+7ts Winged Harpoon
+am5 Maiden Javelin
+ama Ceremonial Javelin
+amf MatriarchalJavelin
+
+[monsterparts]
+yyy ÿc9Cookbook
+zzz ÿc1Steak
+hrt ÿc1Heart
+brz ÿc1Brain
+jaw ÿc7Jawbone
+eyz ÿc9Eye
+hrn ÿc:Horn
+tal ÿc8Tail
+flg ÿc1Flag
+fng ÿc5Fang
+qll ÿc5Quill
+sol ÿc3Soul
+scz ÿc:Scalp
+spe ÿc;Spleen
+
+[scrolltome]
+tbk Town Portal Book
+ibk Identify Book
+tsc Town Portal Scroll
+isc Identify Scroll
+
+[charms]
+cm0 Extra Small Charm (abolished)
+cm1 Small Charm
+cm2 Large Charm
+cm3 Grand Charm
+cm4 Odd Charm
+cm5 Square Charm
+cm6 Odd Charm (soc)
+cm7 ÿc2Large Charm Damage Augmenter
+cm8 Noob's Odd Charm
+cm9 Veteran's Odd Charm
+cx0 Extra Small Charm
+cx1 Small Charm
+cx2 Large Charm
+cx3 Grand Charm

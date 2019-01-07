@@ -1,0 +1,231 @@
+qui Autolycus' Robes
+0b0 Barbarian's Point-H
+0bs Iron Wolf's Broad Sword-H
+0gd Sarevok's Master
+0nn Borik's Nightblade
+0sb Griffith's Parry
+0st Mercenary's Pike-H
+0sy Reaver of the Angel of A
+1cs Crook of the Darkest Valley
+1ls Branch of the Ents
+1sb Rogue's Bow-H
+7wb Sascha's Deadly Point
+8lw Lixo's Harp
+8sb Rogue's Bow-NM
+8ws The Staff of the Magi
+9b9 Barbarian's Point-NM
+9be Lancelot's Prediction
+9bs Iron Wolf's Broad Sword-NM
+9cr Keeper of the Fire
+9cs Alora's Silent Assault
+9fc Krakerag's Point
+9fl Darkshade's Evisceration
+9gm Fyrre's Deception
+9gs Krakerag's Slay
+9gw Lim-Dul's Hex
+9mt Darkshade's Skewer
+9p9 Aanna's Touch
+9pb Noir's Focus
+9qr Sascha's Jagged Strike
+9rd Nupraptor's Eradicator
+9st Mercenary's Pike-NM
+9yw The Lich's Curse
+aar Kain's Fear
+ahb Darien's Band
+alb Lim-Dul's Vault
+am3 Gabrielle's Pointed Staff
+ama Alaziel's Point
+amd Milea's Maim
+amu Amulet
+ba3 Barbarian's Visage-N
+ba8 Barbarian's Visage-NM
+ba9 Darkshade's Haze
+bad Barbarian's Visage-H
+bae Sarevok's Malicious Stare
+baf Crown of the Northern Tribes
+bhm Wrathamon's Skull
+bmb Tasselhoff's Pouches
+brg Worldstone Shard
+brs Tyrael's Halo
+bsd Iron Wolf's Broad Sword-N
+bsw Barbarian's Point-N
+btl Power
+btx Messerschmidt's Reaver
+buc Hsarus' Iron Fist-Dru
+cap Infernal Cranium-Nec
+cap Berserker's Headgear-Bar
+chn Iron Wolf's Robes-N
+ci0 Tara's Vision
+ci1 Divada's Tiara
+ci2 Raistlin's Glance
+ci3 Milea's Crown
+ci4 Lixo's Flight
+cix Vega's Beauty
+clb Hsaru's Iron Arm
+clk Death's Guard-Ass
+clw Grace
+crn Anduin's Vision
+crs Tyrael's Virtue
+dam Jaheira's Force
+dbt Wanderer's Waltz
+dr2 Blackwing's Will
+dr4 Danarak's Spirit
+dr8 Horns of Power
+drb Terra's Clairvoyance
+eht Gabrielle's Revelation
+elv Malek's Pride
+fhl Helm of Spirits
+ful Armor of Gloom
+ghm Iron Wolf's Coif-N
+gis Blackwing's Force
+gsd Blood Baron
+gts Kain's Sentinel
+hax Berserker's Hatchet-Bar
+hbl Achilles' Girdle
+hbt Achilles' Heel
+hbw Arctic Horn-Ama
+hgl Achilles' Force
+hla Berserker's Hauberk-Bar
+hlm Mercenary's Shiek-N
+irg Kain's Wings
+kit Iron Wolf's Guard-N
+ktr Death's Touch-Ass
+lbl Arcanna's Flesh-Sor
+lbt Boots of Sneaking/Hsarus' Iron Heel-Dru
+lea Rogue's Suit-N
+lgl Death's Hand-Ass
+lrg Tara's Mirror
+ltp Naj's Light Plate
+mau Danarak's Mallet
+mbl Infernal Sign-Nec
+mbt Blackwing's Icewoven Strap
+mgl Messerschmidt's Burning Palm
+mnb Divada's Focus
+msb Malek's Grip
+msk Rathol's Gaze
+nea Nupraptor's Servant
+neb Lim-Dul's High Guardian
+njt Motoko's Power
+nsy Rathol's Touch
+ob3 Tara's Eye
+obc Arion's Eye
+pa4 Anduin's Protector
+paa Lancelot's Heraldic Lion
+pam Griffith's Charm
+pbe Malek's Strike
+rin Ring
+rng Rathol's Fear
+rob Tara's Gown
+sam Jade Star
+sbw Rogue's Bow-N
+scl Gabrielle's Defense
+scp Milabrega's Rod-Pal
+shl Motoko's Kimono
+skp Rogue's Cap-N
+sml Milabrega's Orb-Pal
+spk Tyrael's Faith
+spl Barbarian's Shelter-N
+spt Mercenary's Pike-N
+srn Jade Crest
+sst Arcanna's Deathwand-Sor
+stu Mercenary's Wraps-N
+syn Wrathamon's Scythe of Doom
+tbl Vega's Sash
+tbt Messerschmidt's Brace
+tgl Blackwing's Clench
+tow Stormshield
+vbl Autolycus' Thieving Tools/Arctic Binding
+vbt Milabrega's Ironsoles-Pal
+vgl Arctic Mitts-Ama
+whm Anduin's Vanquisher
+wnd Infernal Torch-Nec
+wst Naj's Puzzler
+xap Alora's Veil
+xar Darkshade's Spined Sheath
+xbt Noir's Stride
+xcl Robes of Earth and Water
+xea Rogue's Suit-NM
+xh9 Nupraptor's Skull
+xhb Persephone's Heel
+xhg Ihsan's Clutch
+xhh Sascha's Bosom
+xhl Tharn's Ward
+xhm Iron Wolf's Coif-NM
+xhn Iron Wolf's Robes-NM
+xig Noir's Tenacity
+xit Iron Wolf's Guard-NM
+xkp Rogue's Cap-NM
+xla Lixo's Coat
+xlb Naj's Fireward
+xld Krakerag's Chestplate
+xlg The Hands of Wier
+xlk Alora's Silhouette
+xlm Mercenary's Shiek-NM
+xlt Aanna's Dress
+xlv Alaziel's Protector
+xmb Alora's Vestige
+xmg The Lich's Clutch
+xms Ihsan's Coil
+xng Wrathamon's Cloak of Night
+xpk Malek's Defense
+xpl Barbarian's Shelter-NM
+xrb Divada's Shawl
+xrn Malek's Sight
+xrs The Lich's Cage
+xsk The Lich's Pate
+xtb Aanna's March
+xtg Aanna's Skill
+xth Griffith's Protection
+xtp Robes of the Arch-Magi
+xtu Mercenary's Wraps-NM
+xuc Divada's Screen
+xui Danarak's Wrap
+xul Lancelot's Security
+xvb Sandals of the Wind
+xvg Bard's Graceful Hand
+yap Ihsan's Gaze
+yar Cow King's Steel Hide
+ybt Cow King's Steel Hoofs
+ycl Darien's Faith
+ydw Cow King's Steel Horns
+yea Rogue's Suit-H
+yh9 Mask of the Angel of Death
+yhg Jaheira's Caress
+yhh Borik's Dark Binding
+yhl Darien's Wit
+yhm Iron Wolf's Coif-H
+yhn Iron Wolf's Robes-H
+yht Noir's Anticipation
+yig Claws of the Dragon
+yit Iron Wolf's Guard-H
+ykp Rogue's Cap-H
+yla Jade Wrap
+ylb Sascha's Black Slipper
+yld Sarevok's Savage Heart
+ylg Arion's Hand
+ylk Ihsan's Spine
+ylm Mercenary's Shiek-H
+ylt Jaheira's Volition
+ylv Tasselhoff's Jerkin
+ymb Lim-Dul's Oath
+ymg Alaziel's Grip
+yml Alaziel's Buckler
+yng Milea's Mail
+ypl Barbarian's Shelter-H
+yrb Arion's Heart
+yrs Shepherd's Invocation
+ysk Griffith's Stare
+ytb Tasselhoff's Breaches
+ytg Shepherd's Blessing
+yth Flesh of the Angel of Chaos
+ytp Hide of the Tarrasque
+ytu Mercenary's Wraps-H
+yui Gaia's Carapace
+yul Harrogath's Heirloom
+yvb Jade Slipper
+yvg Borik's Black Hand
+zhb Darkshade's Binding
+zlb Root's Banded Restraint
+zmb Band of Famine
+ztb Jaheira's Girdle
+zvb The Lich's Sole
