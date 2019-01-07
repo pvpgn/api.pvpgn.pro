@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Argument_DifferentBitStreamLengths" xml:space="preserve">
+    <value>BitStream lengths must be the same.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_Byte" xml:space="preserve">
+    <value>count + bitIndex exceeds the length of the 8-bit value.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_UInt16" xml:space="preserve">
+    <value>count + bitIndex exceeds the length of the 16-bit value.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_UInt32" xml:space="preserve">
+    <value>count + bitIndex exceeds the length of the 32-bit value.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_UInt64" xml:space="preserve">
+    <value>count + bitIndex exceeds the length of the 64-bit value.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_BitStream" xml:space="preserve">
+    <value>count + offset were out of bounds for the BitStream or count is greater than the number of elements from bitIndex to the end of the BitStream.</value>
+  </data>
+  <data name="Argument_InvalidCountOrOffset" xml:space="preserve">
+    <value>count + offset were out of bounds for the array or count is greater than the number of elements from offset to the end of the array.</value>
+  </data>
+  <data name="ArgumentNull_BitBuffer" xml:space="preserve">
+    <value>The bit buffer cannot be null.</value>
+  </data>
+  <data name="ArgumentNull_BitStream" xml:space="preserve">
+    <value>The BitStream cannot be null.</value>
+  </data>
+  <data name="ArgumentNull_Stream" xml:space="preserve">
+    <value>The Stream cannot be null.</value>
+  </data>
+  <data name="ArgumentOutOfRange_NegativeOrZeroCapacity" xml:space="preserve">
+    <value>Capacity must be greater than zero.</value>
+  </data>
+  <data name="ArgumentOutOfRange_NegativeParameter" xml:space="preserve">
+    <value>Parameter must be greater than or equal to zero.</value>
+  </data>
+  <data name="ArgumentOutOfRange_NegativePosition" xml:space="preserve">
+    <value>Position must be greater than or equal to zero.</value>
+  </data>
+  <data name="ArgumentOutOfRange_InvalidPosition" xml:space="preserve">
+    <value>Position must be less than or equal to the Bit Stream Length.</value>
+  </data>
+  <data name="InvalidOperation_BitIndexGreaterThan32" xml:space="preserve">
+    <value>The internal bit buffer's bit index cannot be greater than 32.</value>
+  </data>
+  <data name="NotSupported_AsyncOps" xml:space="preserve">
+    <value>Asynchronous operations are not supported by the BitStream class.</value>
+  </data>
+  <data name="NotSupported_Flush" xml:space="preserve">
+    <value>Cannot Flush a BitStream.</value>
+  </data>
+  <data name="NotSupported_Seek" xml:space="preserve">
+    <value>Cannot Seek on a BitStream. Use Position property instead.</value>
+  </data>
+  <data name="NotSupported_SetLength" xml:space="preserve">
+    <value>Cannot SetLength of a BitStream.</value>
+  </data>
+  <data name="NotSupported_ReadByte" xml:space="preserve">
+    <value>The inherited ReadByte method is not supported by the BitStream class. Use one of the overloaded Read methods instead.</value>
+  </data>
+  <data name="NotSupported_WriteByte" xml:space="preserve">
+    <value>The inherited WriteByte method is not supported by the BitStream class. Use one of the overloaded Write methods instead.</value>
+  </data>
+  <data name="ObjectDisposed_BitStreamClosed" xml:space="preserve">
+    <value>Cannot access a closed BitStream.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_Decimal" xml:space="preserve">
+    <value>count + bitIndex exceeds the length of the 128-bit value.</value>
+  </data>
+  <data name="Argument_InvalidCountOrBitIndex_Char" xml:space="preserve">
+    <value>count + bitIndex exceeds the length of the 16-bit value.</value>
+  </data>
+  <data name="ArgumentNull_MemoryStream" xml:space="preserve">
+    <value>The MemoryStream cannot be null.</value>
+  </data>
+  <data name="ArgumentNull_FileStream" xml:space="preserve">
+    <value>The FileStream cannot be null.</value>
+  </data>
+  <data name="ArgumentNull_BufferedStream" xml:space="preserve">
+    <value>The BufferedStream cannot be null.</value>
+  </data>
+  <data name="ArgumentNull_NetworkStream" xml:space="preserve">
+    <value>The NetworkStream cannot be null.</value>
+  </data>
+  <data name="ArgumentNull_CryptoStream" xml:space="preserve">
+    <value>The CryptoStream cannot be null.</value>
+  </data>
+</root>

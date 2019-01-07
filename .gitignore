@@ -1,0 +1,7 @@
+.localhistory
+.vs
+*/bin
+*/obj
+
+*.suo
+*.user
