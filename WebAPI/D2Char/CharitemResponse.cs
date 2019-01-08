@@ -5,22 +5,24 @@ using System.Web;
 using CharacterEditor;
 
 
-namespace WebAPI
+namespace WebAPI.D2Char
 {
     /// <summary>
     /// Response for Item
     /// </summary>
     public class CharItemResponse : CharacterResponse
     {
-        // TODO: load in config names and titles from Diablo 2 resources
+        // TODO: 1) html field - load in config names and titles from Diablo 2 resources
         //       create additional fields for these
+        //       2) gfx field  for image
         public CharItemResponse() { }
 
         public CharItemResponse(Item item)
         {
-            Data = item.GetItemBytes();
-            // remove Item position/id and generate Hash
-            Hash = Helper.MD5(Helper.DefaultItemPosition(Data).GetItemBytes());
+            var originalData = item.GetItemBytes();
+            // set default item position, this way item bytes (and hash) will equal to the same items which contain different positions
+            Data = Helper.DefaultItemPosition(originalData).GetItemBytes();
+            Hash = Helper.MD5(Data);
 
 
             // FIXME: ORDER IS IMPORTANT AND MUST BE THE SAME AS IN ItemRepository! (otherwise item hashes are different)
@@ -105,8 +107,104 @@ namespace WebAPI
             Suffix1 = item.Suffix1;
             Suffix2 = item.Suffix2;
 
-            DisplayData = new ItemDisplayResponse(this);
+            DisplayData = new ItemDisplayResponse(item);
         }
+
+
+
+        /// <summary>
+        /// Return item object
+        /// </summary>
+        public Item GetItem(Item item)
+        {
+            item.Sockets.Clear();
+            foreach (var socket in Sockets)
+                item.Sockets.Add(socket.GetItem(Item.NewItem(socket.Data)));
+
+            item.Properties.Clear();
+            foreach (var prop in Properties)
+                item.Properties.Add(prop.GetProperty());
+
+            item.PropertiesRuneword.Clear();
+            foreach (var prop in PropertiesRuneword)
+                item.PropertiesRuneword.Add(prop.GetProperty());
+
+            item.PropertiesSet.Clear();
+            foreach (var prop in PropertiesSet)
+                item.PropertiesSet.Add(prop.GetProperty());
+
+            item.IsEquipped = IsEquipped;
+            item.IsInSocket = IsInSocket;
+            item.IsIdentified = IsIdentified;
+            item.IsSwitchIn = IsSwitchIn;
+            item.IsSwitchOut = IsSwitchOut;
+            item.IsBroken = IsBroken;
+            item.IsSocketed = IsSocketed;
+            item.IsPotion = IsPotion;
+            item.IsStoreItem = IsStoreItem;
+            item.IsNotInSocket = IsNotInSocket;
+            item.IsEar = IsEar;
+            item.IsStarterItem = IsStarterItem;
+            item.IsSimpleItem = IsSimpleItem;
+            item.IsEthereal = IsEthereal;
+            item.IsPersonalized = IsPersonalized;
+            item.IsGamble = IsGamble;
+            item.IsRuneword = IsRuneword;
+            item.Location = Location;
+            item.PositionOnBody = PositionOnBody;
+            item.PositionX = PositionX;
+            item.PositionY = PositionY;
+            item.StorageId = StorageId;
+            item.ItemCode = ItemCode;
+            item.GoldAmountSmall = GoldAmountSmall;
+            item.GoldAmountLarge = GoldAmountLarge;
+            item.SocketsFilled = SocketsFilled;
+            item.Id = Id;
+            item.Level = Level;
+            item.Quality = Quality;
+            item.HasGraphic = HasGraphic;
+            item.Graphic = Graphic;
+            item.UniqueSetId = UniqueSetId;
+            item.Defense = Defense;
+            item.MaxDurability = MaxDurability;
+            item.Durability = Durability;
+            item.IsIndestructable = IsIndestructable;
+            item.SocketCount = SocketCount;
+            item.Quantity = Quantity;
+            item.RandomFlag = RandomFlag;
+            item.UnknownGoldFlag = UnknownGoldFlag;
+            item.ClassFlag = ClassFlag;
+            item.ClassInfo = ClassInfo;
+            item.InferiorQualityType = InferiorQualityType;
+            item.SuperiorQualityType = SuperiorQualityType;
+            item.CharmData = CharmData;
+            item.SpellId = SpellId;
+            item.MonsterId = MonsterId;
+            item.EarClass = EarClass;
+            item.EarLevel = EarLevel;
+            //item.EarName = EarName; // readonly
+            //item.PersonalizedName = PersonalizedName; // readonly
+            item.RunewordId = RunewordId;
+            item.PrefixNameId = PrefixNameId;
+            item.SuffixNameId = SuffixNameId;
+            item.PrefixFlag0 = PrefixFlag0;
+            item.PrefixFlag1 = PrefixFlag1;
+            item.PrefixFlag2 = PrefixFlag2;
+            item.SuffixFlag0 = SuffixFlag0;
+            item.SuffixFlag1 = SuffixFlag1;
+            item.SuffixFlag2 = SuffixFlag2;
+            item.MagicPrefix = MagicPrefix;
+            item.MagicSuffix = MagicSuffix;
+            item.Prefix0 = Prefix0;
+            item.Prefix1 = Prefix1;
+            item.Prefix2 = Prefix2;
+            item.Suffix0 = Suffix0;
+            item.Suffix1 = Suffix1;
+            item.Suffix2 = Suffix2;
+
+            return item;
+        }
+
 
         public new String FileType = "charitem";
         public String Hash;
@@ -198,12 +296,12 @@ namespace WebAPI
         {
             public ItemDisplayResponse() { }
 
-            public ItemDisplayResponse(CharItemResponse item)
+            public ItemDisplayResponse(Item item)
             {
-                Name = ItemDefs.GetItemDescription(item.ItemCode);
+                Title = ItemDefs.GetItemDescription(item.ItemCode);
             }
 
-            public string Name;
+            public string Title;
 
 
         }
@@ -219,6 +317,24 @@ namespace WebAPI
                 Value = prop.Value;
                 ParamValue = prop.ParamValue;
                 IsAdditionalProperty = prop.IsAdditionalProperty;
+            }
+
+            /// <summary>
+            /// Return property object
+            /// </summary>
+            /// <returns></returns>
+            public Item.PropertyInfo GetProperty()
+            {
+                var prop = new Item.PropertyInfo
+                {
+                    ID = ID,
+                    //prop.PropertyName = PropertyName; // readonly
+                    Value = Value,
+                    ParamValue = ParamValue,
+                    IsAdditionalProperty = IsAdditionalProperty
+                };
+
+                return prop;
             }
 
             public int ID;

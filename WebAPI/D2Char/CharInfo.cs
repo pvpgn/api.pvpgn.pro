@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Rewrite.Internal.UrlMatches;
 using Microsoft.Extensions.Primitives;
 
-namespace WebAPI
+namespace WebAPI.D2Char
 {
 
     public class CharInfo : CharacterResponse

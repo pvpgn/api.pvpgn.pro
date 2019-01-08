@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using CharacterEditor;
 
-namespace WebAPI
+namespace WebAPI.D2Char
 {
     public class CharacterResponse
     {
@@ -73,24 +73,23 @@ namespace WebAPI
         /// Replace character stats and items
         /// </summary>
         /// <param name="playerData"></param>
-        public void ReplaceData(SaveReader playerData)
+        public SaveReader GetChar(SaveReader playerData)
         {
             playerData.Inventory.PlayerItems.Clear();
             foreach (var i in PlayerItems)
-                playerData.Inventory.PlayerItems.Add(Item.NewItem(i.Data));
+                playerData.Inventory.PlayerItems.Add(i.GetItem(Item.NewItem(i.Data)));
 
             playerData.Inventory.CorpseItems.Clear();
             foreach (var i in CorpseItems)
-                playerData.Inventory.CorpseItems.Add(Item.NewItem(i.Data));
+                playerData.Inventory.CorpseItems.Add(i.GetItem(Item.NewItem(i.Data)));
 
             playerData.Inventory.GolemItems.Clear();
             foreach (var i in GolemItems)
-                playerData.Inventory.GolemItems.Add(Item.NewItem(i.Data));
+                playerData.Inventory.GolemItems.Add(i.GetItem(Item.NewItem(i.Data)));
 
             playerData.Inventory.MercItems.Clear();
             foreach (var i in MercItems)
-                playerData.Inventory.MercItems.Add(Item.NewItem(i.Data)); 
-
+                playerData.Inventory.MercItems.Add(i.GetItem(Item.NewItem(i.Data))); 
 
             playerData.Character.Name = Name;
             playerData.Character.Class = Class;
@@ -125,6 +124,8 @@ namespace WebAPI
             // starting from 2-d byte (pass "if" header)
             for (var i = 2; i < Skills.Count; i++)
                 playerData.Skill[i - 2] = Skills[i];
+
+            return playerData;
         }
 
 

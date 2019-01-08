@@ -101,7 +101,10 @@ namespace CharacterEditor
 		/// Creates a new SaveReader
 		/// </summary>
 		public SaveReader(string resourceSet)
-		{
+        {
+            // load only once
+            if (ItemDefs.Loaded)
+                return;
 			Resources.Instance.ResourceSet = resourceSet;
 			ItemDefs.LoadItemDefs();
 		}

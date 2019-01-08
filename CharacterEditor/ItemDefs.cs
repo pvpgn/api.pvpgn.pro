@@ -15,6 +15,8 @@ namespace CharacterEditor
 		private static Dictionary<string, ItemStatCost> itemStatCostsByName = new Dictionary<string, ItemStatCost>();
 		private static Dictionary<int, ItemStatCost> itemStatCostsById = new Dictionary<int, ItemStatCost>();
 
+        public static bool Loaded { get; private set; }
+
 		/// <summary>
 		/// List of ItemStatCost records based on Name
 		/// </summary>
@@ -34,7 +36,9 @@ namespace CharacterEditor
 		// TODO: Temp fix! Get rid of static class and move to singleton based on current resource
 		//  set (es300_r6d, rot_1.a3.1, etc)
 		internal static void LoadItemDefs()
-		{
+        {
+            Loaded = true;
+
 			// Temp!
 			itemDescriptions = new Dictionary<string, string>();
 			setDescriptions = new Dictionary<string, string>();

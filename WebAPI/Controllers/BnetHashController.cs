@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.BnetHash;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace WebAPI.Controllers
 {
-    [Route("api/bnethash")]
+    [Route("bnethash")]
     public class BnetHashController : Controller
     {
         /// <summary>
@@ -17,7 +15,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="password"></param>
         /// <returns></returns>
-        // GET api/bnethash/hello
+        // GET /bnethash/hello
         [HttpGet("{password}")]
         public string Get(string password)
         {
@@ -29,7 +27,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="passwords"></param>
         /// <returns></returns>
-        // POST api/bnethash
+        // POST /bnethash
         [HttpPost]
         public string[] Post([FromBody]string[] passwords)
         {

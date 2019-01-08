@@ -571,6 +571,11 @@ namespace CharacterEditor
 			CreateDataIndicies();
 		}
 
+        public Item()
+        {
+
+        }
+
         /// <summary>
         /// 
         /// </summary>
