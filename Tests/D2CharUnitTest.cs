@@ -18,11 +18,11 @@ using Xunit;
 
 namespace Tests
 {
-    public class CharacterUnitTest
+    public class D2CharUnitTest
     {
         private D2CharController _api;
 
-        public CharacterUnitTest()
+        public D2CharUnitTest()
         {
             _api = new D2CharController();
 
