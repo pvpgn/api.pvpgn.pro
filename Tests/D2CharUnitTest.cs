@@ -96,7 +96,7 @@ namespace Tests
         public void CharItemTest()
         {
             var dir = "../Tests/charitem/";
-            foreach (var f in getFilesDirAndSubdirs(dir))
+            foreach (var f in getFilesDirAndSubdirs(dir).Where(s => !s.EndsWith(".gif")))
             {
                 var fileName = Path.Combine(CharacterEditor.Resources.CurrentDirectory, f);
                 var fileMock = getMockFIle(fileName);
@@ -114,6 +114,9 @@ namespace Tests
 
                 // compare returned bytes with original file
                 Assert.Equal(Helper.MD5(bytes), Helper.MD5(File.ReadAllBytes(fileName)));
+
+                // save output gif for debug
+                //File.Copy("../WebAPI/wwwroot/" + obj.DisplayData.ImagePath, dir + Path.GetFileNameWithoutExtension(fileName) + ".gif", true);
             }
         }
 

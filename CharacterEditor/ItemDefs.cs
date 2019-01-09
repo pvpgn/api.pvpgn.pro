@@ -4,6 +4,8 @@ using System.Text;
 using System.IO;
 using System.Collections;
 using System.Linq;
+using CharacterEditor.ResourceModels;
+using CsvHelper;
 
 namespace CharacterEditor
 {
@@ -25,10 +27,19 @@ namespace CharacterEditor
 			get { return itemStatCostsByName; }
 		}
 
-		/// <summary>
-		/// List of ItemStatCost records based on ID
-		/// </summary>
-		public static Dictionary<int, ItemStatCost> ItemStatCostsById
+        /// <summary>
+        /// CSV data
+        /// </summary>
+        public static List<Misc> Misc;
+        public static List<ItemTypes> ItemTypes;
+        public static List<UniqueItems> UniqueItems;
+        public static List<Weapons> Weapons;
+        public static List<Armor> Armor;
+
+        /// <summary>
+        /// List of ItemStatCost records based on ID
+        /// </summary>
+        public static Dictionary<int, ItemStatCost> ItemStatCostsById
 		{
 			get { return itemStatCostsById; }
 		}
@@ -86,17 +97,40 @@ namespace CharacterEditor
 			}
 
 			ReadItemStatCost();
-		}
 
-		static ItemDefs()
+            ReadCsvData();
+        }
+
+        private static void ReadCsvData()
+        {
+            // (HarpyWar) TODO: rewrite ItemStatCost the same way?
+            using (var reader = Resources.Instance.OpenResourceText("Misc.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                Misc = csv.GetRecords<Misc>().ToList();
+            using (var reader = Resources.Instance.OpenResourceText("ItemTypes.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                ItemTypes = csv.GetRecords<ItemTypes>().ToList();
+            using (var reader = Resources.Instance.OpenResourceText("UniqueItems.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                UniqueItems = csv.GetRecords<UniqueItems>().ToList();
+            using (var reader = Resources.Instance.OpenResourceText("Weapons.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                Weapons = csv.GetRecords<Weapons>().ToList();
+            using (var reader = Resources.Instance.OpenResourceText("Armor.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                Armor = csv.GetRecords<Armor>().ToList();
+        }
+
+
+        static ItemDefs()
 		{
-			//LoadItemDefs(); // TODO: No more static class
-		}
+            //LoadItemDefs(); // TODO: No more static class
+        }
 
-		/// <summary>
-		/// Read ItemStatCost data
-		/// </summary>
-		private static void ReadItemStatCost()
+        /// <summary>
+        /// Read ItemStatCost data
+        /// </summary>
+        private static void ReadItemStatCost()
 		{
 			List<ItemStatCost> statCosts = ItemStatCost.Read(Resources.Instance.OpenResourceText("ItemStatCost.txt"));
 
@@ -152,14 +186,119 @@ namespace CharacterEditor
 			}
 
 			return setDescriptions[itemCode];
-		}
+        }
 
-		/// <summary>
-		/// Item is armor
-		/// </summary>
-		/// <param name="itemCode">Item code</param>
-		/// <returns>True if item is armor</returns>
-		public static bool IsArmor(string itemCode)
+        /// <summary>
+        /// Returns gfx for the item
+        ///
+        /// (HarpyWar) How to find gfx for d2item:
+        ///   1) Find in misc, armor, weapon. If found then take invfile.
+        ///       If quality = "set" then try find setinv
+        ///       If quality = "unique" then try find uniqueinv
+        ///   2) If isGraphic = true then find item by "type" in itemtypes and get invfileX where X = graphicid.If found then replace.
+        ///   3) If quality = "unique" then try find item in uniqueitems by uniqueid (index) and if found then replace it.
+        /// </summary>
+        /// <param name="itemCode">Item code</param>
+        /// <returns>Name of image file</returns>
+        public static string GetItemImageFile(Item item)
+        {
+            string fileName = string.Empty;
+
+            if (IsArmor(item.ItemCode))
+            {
+                var r = Armor.FirstOrDefault(t => t.code == item.ItemCode);
+                if (r != null)
+                {
+                    fileName = r.invfile;
+                    if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
+                        fileName = r.uniqueinvfile;
+                    if (item.Quality == (uint)Item.ItemQuality.Set && !string.IsNullOrWhiteSpace(r.setinvfile))
+                        fileName = r.setinvfile;
+                    if (item.HasGraphic)
+                        findInvFileByItemType(ref fileName, r.type, item.Graphic);
+                }
+            }
+            if (IsWeapon(item.ItemCode))
+            {
+                var r = Weapons.FirstOrDefault(t => t.code == item.ItemCode);
+                if (r != null)
+                {
+                    fileName = r.invfile;
+                    if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
+                        fileName = r.uniqueinvfile;
+                    if (item.Quality == (uint)Item.ItemQuality.Set && !string.IsNullOrWhiteSpace(r.setinvfile))
+                        fileName = r.setinvfile;
+                    if (item.HasGraphic)
+                        findInvFileByItemType(ref fileName, r.type, item.Graphic);
+                }
+            }
+            if (!IsArmor(item.ItemCode) && !IsWeapon(item.ItemCode))
+            {
+                var r = Misc.FirstOrDefault(t => t.code == item.ItemCode);
+                if (r != null)
+                {
+                    fileName = r.invfile;
+                    if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
+                        fileName = r.uniqueinvfile;
+                    if (item.HasGraphic)
+                        findInvFileByItemType(ref fileName, r.type, item.Graphic);
+                }
+            }
+            if (item.Quality == (uint)Item.ItemQuality.Unique)
+            {
+                var r = UniqueItems.ElementAtOrDefault((int) item.UniqueSetId);
+                if (r != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(r.invfile))
+                        fileName = r.invfile;
+                }
+            }
+            return fileName;
+        }
+
+        // if graphic > 0 then find in ItemTypes
+        private static void findInvFileByItemType(ref string fileName, string itemType, uint graphic)
+        {
+            var inv = ItemTypes.FirstOrDefault(t => t.Code == itemType && t.VarInvGfx > 0);
+            if (inv != null)
+            {
+                switch (graphic)
+                {
+                    case 0:
+                        if (!string.IsNullOrWhiteSpace(inv.InvGfx1))
+                            fileName = inv.InvGfx1;
+                        break;
+                    case 1:
+                        if (!string.IsNullOrWhiteSpace(inv.InvGfx2))
+                            fileName = inv.InvGfx2;
+                        break;
+                    case 2:
+                        if (!string.IsNullOrWhiteSpace(inv.InvGfx3))
+                            fileName = inv.InvGfx3;
+                        break;
+                    case 3:
+                        if (!string.IsNullOrWhiteSpace(inv.InvGfx4))
+                            fileName = inv.InvGfx4;
+                        break;
+                    case 4:
+                        if (!string.IsNullOrWhiteSpace(inv.InvGfx5))
+                            fileName = inv.InvGfx5;
+                        break;
+                    case 5:
+                        if (!string.IsNullOrWhiteSpace(inv.InvGfx6))
+                            fileName = inv.InvGfx6;
+                        break;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Item is armor
+        /// </summary>
+        /// <param name="itemCode">Item code</param>
+        /// <returns>True if item is armor</returns>
+        public static bool IsArmor(string itemCode)
 		{
 			return itemCodeSets["armor"].Contains(itemCode);
 		}
@@ -173,6 +312,7 @@ namespace CharacterEditor
 		{
 			return itemCodeSets["weapons"].Contains(itemCode);
 		}
+
 
 		/// <summary>
 		/// Item is stackable

@@ -9,6 +9,7 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Diagnostics;
+using CsvHelper.Configuration.Attributes;
 
 namespace CharacterEditor
 {
@@ -156,5 +157,5 @@ namespace CharacterEditor
 
 			return ResourceUtils.ReadAllLines("CharacterEditor.Silverlight", resourcePath);
 		}
-	}
+    }
 }

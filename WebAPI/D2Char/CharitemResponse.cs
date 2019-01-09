@@ -299,10 +299,19 @@ namespace WebAPI.D2Char
             public ItemDisplayResponse(Item item)
             {
                 Title = ItemDefs.GetItemDescription(item.ItemCode);
+                UniqueSetName = ItemDefs.GetUniqueSetName(item.ItemCode);
+                ImageFile = ItemDefs.GetItemImageFile(item);
             }
 
             public string Title;
+            public string UniqueSetName;
+            public string ImageFile;
+            public string ImagePath => $"images/d2gfx/{ImageFile}.gif";
 
+            /// <summary>
+            /// TODO: HTML representation of the item description
+            /// </summary>
+            //public string Html;
 
         }
 

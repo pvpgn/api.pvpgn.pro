@@ -44,6 +44,9 @@ namespace WebAPI.Controllers
             {
                 switch (type)
                 {
+                    case null:
+                        goto default;
+
                     case "charinfo":
                         var charinfo = new CharInfo();
                         charinfo.Read(data);
@@ -63,6 +66,7 @@ namespace WebAPI.Controllers
                         var charitemResponse = new CharItemResponse(charitem);
                         return new SuccessResponse(charitemResponse);
                         break;
+
                     default:
                         return new ErrorResponse("PARAM_MISS", "Type parameter is empty (allowed: charinfo, charsave, charitem)");
                 }

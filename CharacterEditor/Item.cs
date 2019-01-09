@@ -10,7 +10,7 @@ namespace CharacterEditor
 	public class Item : INotifyPropertyChanged, ICloneable
 	{
 		public enum ItemQuality
-		{
+        {
 			Unknown, // Shouldn't happen
 			Inferior,
 			Normal,
@@ -570,11 +570,6 @@ namespace CharacterEditor
 		{
 			CreateDataIndicies();
 		}
-
-        public Item()
-        {
-
-        }
 
         /// <summary>
         /// 
