@@ -120,6 +120,17 @@ namespace Tests
             }
         }
 
+        [Fact]
+        public void TblReadTest()
+        {
+            var tbl = new TblReader("string.tbl");
+            Assert.StartsWith("45\nGreetings", tbl.FindString("WarrivAct1IntroGossip1"));
+            Assert.Equal("Gothic Staff", tbl.FindString("8bs"));
+            Assert.Equal("End of Beta", tbl.FindString("Endthispuppy"));
+        }
+
+
+
         private Mock<IFormFile> getMockFIle(string fileName)
         {
             Debug.WriteLine(fileName);

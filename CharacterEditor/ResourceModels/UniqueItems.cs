@@ -16,7 +16,7 @@ namespace CharacterEditor.ResourceModels
         public string nolimit { get; set; }
         public string lvl { get; set; }
         [Name("lvl req")]
-        public string lvl_req { get; set; }
+        public string lvlReq { get; set; }
         public string code { get; set; }
         [Name("*type")]
         public string type { get; set; }
@@ -24,9 +24,9 @@ namespace CharacterEditor.ResourceModels
         public string uber { get; set; }
         public string carry1 { get; set; }
         [Name("cost mult")]
-        public string cost_mult { get; set; }
+        public string costMult { get; set; }
         [Name("cost add")]
-        public string cost_add { get; set; }
+        public string costAdd { get; set; }
         public string chrtransform { get; set; }
         public string invtransform { get; set; }
         public string flippyfile { get; set; }

@@ -137,7 +137,7 @@ namespace CharacterEditor
 #endif
 		}
 
-		public Stream OpenResource(string resourceName)
+        public Stream OpenResource(string resourceName)
 		{
 			string resourcePath = "Resources/" + resourceSet + "/" + resourceName;
 

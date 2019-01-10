@@ -24,13 +24,13 @@ namespace CharacterEditor.ResourceModels
         public string levelreq { get; set; }
         public string cost { get; set; }
         [Name("gamble cost")]
-        public string gamble_cost { get; set; }
+        public string gambleCost { get; set; }
         public string code { get; set; }
         public string namestr { get; set; }
         [Name("magic lvl")]
-        public string magic_lvl { get; set; }
+        public string magicLvl { get; set; }
         [Name("auto prefix")]
-        public string auto_prefix { get; set; }
+        public string autoPrefix { get; set; }
         public string alternategfx { get; set; }
         public string OpenBetaGfx { get; set; }
         public string normcode { get; set; }
@@ -167,9 +167,9 @@ namespace CharacterEditor.ResourceModels
         public string DrehyaMagicMax { get; set; }
         public string DrehyaMagicLvl { get; set; }
         [Name("Source Art")]
-        public string Source_Art { get; set; }
+        public string SourceArt { get; set; }
         [Name("Game Art")]
-        public string Game_Art { get; set; }
+        public string GameArt { get; set; }
         public string Transform { get; set; }
         public string InvTrans { get; set; }
         public string SkipName { get; set; }

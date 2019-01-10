@@ -929,19 +929,19 @@ namespace CharacterEditor
 		{
 			if (ItemDefs.IsArmor(ItemCode))
 			{
-				ReadData("Defense", ItemDefs.ItemStatCostsByName["armorclass"].SaveBits);
-				Defense -= (uint)ItemDefs.ItemStatCostsByName["armorclass"].SaveAdd;
+				ReadData("Defense", ItemDefs.ItemStatCost["armorclass"].SaveBits);
+				Defense -= (uint)ItemDefs.ItemStatCost["armorclass"].SaveAdd;
 			}
 
 			if (ItemDefs.IsWeapon(ItemCode) || ItemDefs.IsArmor(ItemCode))
 			{
-				ReadData("MaxDurability", ItemDefs.ItemStatCostsByName["maxdurability"].SaveBits);
-				MaxDurability -= (uint)ItemDefs.ItemStatCostsByName["maxdurability"].SaveAdd;
+				ReadData("MaxDurability", ItemDefs.ItemStatCost["maxdurability"].SaveBits);
+				MaxDurability -= (uint)ItemDefs.ItemStatCost["maxdurability"].SaveAdd;
 
 				if (MaxDurability != 0)
 				{
-					ReadData("Durability", ItemDefs.ItemStatCostsByName["durability"].SaveBits);
-					Durability -= (uint)ItemDefs.ItemStatCostsByName["durability"].SaveAdd;
+					ReadData("Durability", ItemDefs.ItemStatCost["durability"].SaveBits);
+					Durability -= (uint)ItemDefs.ItemStatCost["durability"].SaveAdd;
 				}
 				else
 				{
@@ -1008,10 +1008,10 @@ namespace CharacterEditor
 		/// <param name="currentPropertyID">ID of property to read from BitReader</param>
 		/// <param name="isAdditional">Property to read has no header. Found in damage type properties</param>
 		private void ReadPropertyData(List<PropertyInfo> propertyList, int currentPropertyID, bool isAdditional = false)
-		{
-            if (!ItemDefs.ItemStatCostsById.ContainsKey(currentPropertyID))
+        {
+            var statCost = ItemDefs.ItemStatCost.Values.ElementAtOrDefault(currentPropertyID);
+            if (statCost == null)
                 return;
-            ItemStatCost statCost = ItemDefs.ItemStatCostsById[currentPropertyID];
             PropertyInfo currentPropertyInfo = new PropertyInfo();
 
 			currentPropertyInfo.IsAdditionalProperty = isAdditional;
@@ -1028,24 +1028,24 @@ namespace CharacterEditor
 			switch (statCost.Stat)
 			{
 				case "item_maxdamage_percent":
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["item_mindamage_percent"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["item_mindamage_percent"].ID, true);
 					break;
 				case "firemindam":
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["firemaxdam"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["firemaxdam"].ID, true);
 					break;
 				case "lightmindam":
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["lightmaxdam"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["lightmaxdam"].ID, true);
 					break;
 				case "magicmindam":
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["magicmaxdam"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["magicmaxdam"].ID, true);
 					break;
 				case "coldmindam":
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["coldmaxdam"].ID, true);
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["coldlength"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["coldmaxdam"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["coldlength"].ID, true);
 					break;
 				case "poisonmindam":
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["poisonmaxdam"].ID, true);
-					ReadPropertyData(propertyList, ItemDefs.ItemStatCostsByName["poisonlength"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["poisonmaxdam"].ID, true);
+					ReadPropertyData(propertyList, ItemDefs.ItemStatCost["poisonlength"].ID, true);
 					break;
 				default:
 					break;
@@ -1332,15 +1332,15 @@ namespace CharacterEditor
 
 						if (item.Key == "Defense")
 						{
-							value += (uint)ItemDefs.ItemStatCostsByName["armorclass"].SaveAdd;
+							value += (uint)ItemDefs.ItemStatCost["armorclass"].SaveAdd;
 						}
 						else if (item.Key == "MaxDurability")
 						{
-							value += (uint)ItemDefs.ItemStatCostsByName["maxdurability"].SaveAdd;
+							value += (uint)ItemDefs.ItemStatCost["maxdurability"].SaveAdd;
 						}
 						else if (item.Key == "Durability")
 						{
-							value += (uint)ItemDefs.ItemStatCostsByName["durability"].SaveAdd;
+							value += (uint)ItemDefs.ItemStatCost["durability"].SaveAdd;
 						}
 
 						bs.WriteReversed(value, item.Value.BitCount);
@@ -1440,20 +1440,22 @@ namespace CharacterEditor
 				return;
 			}
 
-			ItemStatCost statCost = ItemDefs.ItemStatCostsById[property.ID];
+			var s = ItemDefs.ItemStatCost.Values.ElementAtOrDefault(property.ID);
+            if (s == null)
+                throw new Exception("Invalid property ID " + property.ID);
 
-			int fixedValue = property.Value + statCost.SaveAdd;
+			int fixedValue = property.Value + s.SaveAdd;
 
 			if (!property.IsAdditionalProperty)
 			{
 				bs.WriteReversed(property.ID, 9);
 			}
 
-			bs.WriteReversed(fixedValue, statCost.SaveBits);
+			bs.WriteReversed(fixedValue, s.SaveBits);
 
-			if (statCost.SaveParamBits > 0)
+			if (s.SaveParamBits > 0)
 			{
-				bs.WriteReversed(property.ParamValue, statCost.SaveParamBits);
+				bs.WriteReversed(property.ParamValue, s.SaveParamBits);
 			}
 		}
 

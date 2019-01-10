@@ -5,6 +5,7 @@ using System.Text;
 using System.Collections;
 using BKSystem.IO;
 using System.ComponentModel;
+using CharacterEditor.ResourceModels;
 
 namespace CharacterEditor
 {
@@ -281,7 +282,7 @@ namespace CharacterEditor
 		/// <returns>Value of stat or 0 if stat is not present</returns>
 		private int GetStatValue(string name)
 		{
-			int statId = ItemDefs.ItemStatCostsByName[name].ID;
+			int statId = ItemDefs.ItemStatCost[name].ID;
 
 			if (!statValues.ContainsKey(statId))
 			{
@@ -298,12 +299,12 @@ namespace CharacterEditor
 		/// <param name="value">Value to set stat to</param>
 		private void SetStatValue(string name, int value)
 		{
-			if (!ItemDefs.ItemStatCostsByName.ContainsKey(name))
+            if (!ItemDefs.ItemStatCost.ContainsKey(name))
 			{
-				throw new Exception("SetStatValue: Invalid stat name"); 
+				throw new Exception("SetStatValue: Invalid stat name " + name); 
 			}
 
-			int statId = ItemDefs.ItemStatCostsByName[name].ID;
+			int statId = ItemDefs.ItemStatCost[name].ID;
 
 			// If value is 0, we assume user wants to delete the entry for that stat. 0 should 
 			// be default if no record exists when diablo loads the save so it should work out?
@@ -346,13 +347,17 @@ namespace CharacterEditor
 					break;
 				}
 
-				statValueBits = ItemDefs.ItemStatCostsById[statIndex].CSvBits;
+                var s = ItemDefs.ItemStatCost.Values.ElementAtOrDefault(statIndex);
+                if (s == null)
+                    throw new Exception("Invalid property ID " + statIndex);
+
+                statValueBits = s.CSvBits;
 				if (statValueBits == 0)
 				{
 					break;
 				}
 
-				valShift = ItemDefs.ItemStatCostsById[(int)statIndex].ValShift;
+				valShift = s.ValShift;
 
 				int statValue = (int)bs.ReadReversed(statValueBits);
 				if (!statValues.ContainsKey(statIndex))
@@ -380,14 +385,15 @@ namespace CharacterEditor
 				bits.WriteReversed(stat.Key, 9);
 
 				int valShift = 0;
-				int bitCount = ItemDefs.ItemStatCostsById[stat.Key].CSvBits;
 
-				if (ItemDefs.ItemStatCostsById.ContainsKey(stat.Key))
-				{
-					valShift = ItemDefs.ItemStatCostsById[stat.Key].ValShift;
-				}
+                var s = ItemDefs.ItemStatCost.Values.ElementAtOrDefault(stat.Key);
+                if (s == null)
+                    throw new Exception("Invalid property ID " + stat.Key);
 
-				bits.WriteReversed((uint)((stat.Value << valShift)), bitCount);
+                int bitCount = s.CSvBits;
+                valShift = s.ValShift;
+
+                bits.WriteReversed((uint)((stat.Value << valShift)), bitCount);
 			}
 
 			// Write termining stat index

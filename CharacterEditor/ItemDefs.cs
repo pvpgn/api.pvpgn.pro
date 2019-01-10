@@ -14,35 +14,21 @@ namespace CharacterEditor
 		private static Dictionary<string, string> itemDescriptions = new Dictionary<string, string>();
 		private static Dictionary<string, string> setDescriptions = new Dictionary<string, string>();
 		private static Dictionary<string, HashSet<string>> itemCodeSets = new Dictionary<string, HashSet<string>>();
-		private static Dictionary<string, ItemStatCost> itemStatCostsByName = new Dictionary<string, ItemStatCost>();
-		private static Dictionary<int, ItemStatCost> itemStatCostsById = new Dictionary<int, ItemStatCost>();
 
         public static bool Loaded { get; private set; }
-
-		/// <summary>
-		/// List of ItemStatCost records based on Name
-		/// </summary>
-		public static Dictionary<string, ItemStatCost> ItemStatCostsByName
-		{
-			get { return itemStatCostsByName; }
-		}
 
         /// <summary>
         /// CSV data
         /// </summary>
-        public static List<Misc> Misc;
-        public static List<ItemTypes> ItemTypes;
+        public static Dictionary<string, Misc> Misc;
+        public static Dictionary<string, ItemTypes> ItemTypes;
         public static List<UniqueItems> UniqueItems;
-        public static List<Weapons> Weapons;
-        public static List<Armor> Armor;
+        public static Dictionary<string, Weapons> Weapons;
+        public static Dictionary<string, Armor> Armor;
+        public static Dictionary<string, ItemStatCost> ItemStatCost;
 
-        /// <summary>
-        /// List of ItemStatCost records based on ID
-        /// </summary>
-        public static Dictionary<int, ItemStatCost> ItemStatCostsById
-		{
-			get { return itemStatCostsById; }
-		}
+        public static TblReader StringTables;
+
 
 		// TODO: Temp fix! Get rid of static class and move to singleton based on current resource
 		//  set (es300_r6d, rot_1.a3.1, etc)
@@ -54,8 +40,6 @@ namespace CharacterEditor
 			itemDescriptions = new Dictionary<string, string>();
 			setDescriptions = new Dictionary<string, string>();
 			itemCodeSets = new Dictionary<string, HashSet<string>>();
-			itemStatCostsByName = new Dictionary<string, ItemStatCost>();
-			itemStatCostsById = new Dictionary<int, ItemStatCost>();
 
 			List<String> fileContents = Resources.Instance.ReadAllLines("AllItems.txt");
 
@@ -96,29 +80,40 @@ namespace CharacterEditor
 					setDescriptions.Add(itemCode, str.Substring(4));
 			}
 
-			ReadItemStatCost();
-
             ReadCsvData();
+
+            StringTables = new TblReader(new string[] {
+                "string.tbl", 
+                "expansionstring.tbl", 
+                "patchstring.tbl"
+            });
         }
 
         private static void ReadCsvData()
         {
-            // (HarpyWar) TODO: rewrite ItemStatCost the same way?
             using (var reader = Resources.Instance.OpenResourceText("Misc.txt"))
             using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
-                Misc = csv.GetRecords<Misc>().ToList();
+                Misc = csv.GetRecords<Misc>().ToDictionary(t => t.code, t => t);
+
             using (var reader = Resources.Instance.OpenResourceText("ItemTypes.txt"))
             using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
-                ItemTypes = csv.GetRecords<ItemTypes>().ToList();
+                ItemTypes = csv.GetRecords<ItemTypes>().GroupBy(t => t.Code).ToDictionary(t => t.Key, t => t.First()); // ignore empty duplicates
+
             using (var reader = Resources.Instance.OpenResourceText("UniqueItems.txt"))
             using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
                 UniqueItems = csv.GetRecords<UniqueItems>().ToList();
+
             using (var reader = Resources.Instance.OpenResourceText("Weapons.txt"))
             using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
-                Weapons = csv.GetRecords<Weapons>().ToList();
+                Weapons = csv.GetRecords<Weapons>().ToDictionary(t => t.code, t => t);
+
             using (var reader = Resources.Instance.OpenResourceText("Armor.txt"))
             using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
-                Armor = csv.GetRecords<Armor>().ToList();
+                Armor = csv.GetRecords<Armor>().ToDictionary(t => t.code, t => t);
+
+            using (var reader = Resources.Instance.OpenResourceText("ItemStatCost.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                ItemStatCost = csv.GetRecords<ItemStatCost>().ToDictionary(t => t.Stat, t => t);
         }
 
 
@@ -127,35 +122,23 @@ namespace CharacterEditor
             //LoadItemDefs(); // TODO: No more static class
         }
 
-        /// <summary>
-        /// Read ItemStatCost data
-        /// </summary>
-        private static void ReadItemStatCost()
-		{
-			List<ItemStatCost> statCosts = ItemStatCost.Read(Resources.Instance.OpenResourceText("ItemStatCost.txt"));
-
-			itemStatCostsByName = statCosts.ToDictionary(v => v.Stat, v => v);
-			itemStatCostsById = statCosts.ToDictionary(v => v.ID, v => v);
-		}
-
 		/// <summary>
 		/// Returns the name of the specified property ID
 		/// </summary>
 		/// <param name="id">ID of property</param>
 		/// <returns>Name of property with specified ID</returns>
 		public static string GetPropertyName(int id)
-		{
-			if (!itemStatCostsById.ContainsKey(id))
+        {
+            var p = ItemStatCost.Values.ElementAtOrDefault(id);
+            if (p == null)
 			{
 				if (id == 0x1ff)
 				{
 					return "EOF";
 				}
-
 				return "UNKNOWN";
 			}
-
-			return itemStatCostsById[id].Stat;
+			return p.Stat;
 		}
 
 		/// <summary>
@@ -198,7 +181,7 @@ namespace CharacterEditor
         ///   2) If isGraphic = true then find item by "type" in itemtypes and get invfileX where X = graphicid.If found then replace.
         ///   3) If quality = "unique" then try find item in uniqueitems by uniqueid (index) and if found then replace it.
         /// </summary>
-        /// <param name="itemCode">Item code</param>
+        /// <param name="item">Item</param>
         /// <returns>Name of image file</returns>
         public static string GetItemImageFile(Item item)
         {
@@ -206,9 +189,9 @@ namespace CharacterEditor
 
             if (IsArmor(item.ItemCode))
             {
-                var r = Armor.FirstOrDefault(t => t.code == item.ItemCode);
-                if (r != null)
+                if (Armor.ContainsKey(item.ItemCode))
                 {
+                    var r = Armor[item.ItemCode];
                     fileName = r.invfile;
                     if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
                         fileName = r.uniqueinvfile;
@@ -220,9 +203,9 @@ namespace CharacterEditor
             }
             if (IsWeapon(item.ItemCode))
             {
-                var r = Weapons.FirstOrDefault(t => t.code == item.ItemCode);
-                if (r != null)
+                if (Weapons.ContainsKey(item.ItemCode))
                 {
+                    var r = Weapons[item.ItemCode];
                     fileName = r.invfile;
                     if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
                         fileName = r.uniqueinvfile;
@@ -234,9 +217,9 @@ namespace CharacterEditor
             }
             if (!IsArmor(item.ItemCode) && !IsWeapon(item.ItemCode))
             {
-                var r = Misc.FirstOrDefault(t => t.code == item.ItemCode);
-                if (r != null)
+                if (Armor.ContainsKey(item.ItemCode))
                 {
+                    var r = Armor[item.ItemCode];
                     fileName = r.invfile;
                     if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
                         fileName = r.uniqueinvfile;
@@ -259,9 +242,9 @@ namespace CharacterEditor
         // if graphic > 0 then find in ItemTypes
         private static void findInvFileByItemType(ref string fileName, string itemType, uint graphic)
         {
-            var inv = ItemTypes.FirstOrDefault(t => t.Code == itemType && t.VarInvGfx > 0);
-            if (inv != null)
+            if (ItemTypes.ContainsKey(itemType) && ItemTypes[itemType].VarInvGfx > 0)
             {
+                var inv = ItemTypes[itemType];
                 switch (graphic)
                 {
                     case 0:

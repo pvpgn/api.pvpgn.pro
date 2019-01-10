@@ -326,6 +326,12 @@ namespace WebAPI.D2Char
                 Value = prop.Value;
                 ParamValue = prop.ParamValue;
                 IsAdditionalProperty = prop.IsAdditionalProperty;
+                var stat = ItemDefs.ItemStatCost.Values.ElementAtOrDefault(prop.ID);
+
+                Description = (stat != null)
+                    ? ItemDefs.StringTables.FindString(stat.descstrpos)
+                    : "Invalid property";
+
             }
 
             /// <summary>
@@ -340,7 +346,7 @@ namespace WebAPI.D2Char
                     //prop.PropertyName = PropertyName; // readonly
                     Value = Value,
                     ParamValue = ParamValue,
-                    IsAdditionalProperty = IsAdditionalProperty
+                    IsAdditionalProperty = IsAdditionalProperty,
                 };
 
                 return prop;
@@ -351,6 +357,8 @@ namespace WebAPI.D2Char
             public int Value;
             public int ParamValue;
             public bool IsAdditionalProperty;
+
+            public string Description;
         }
     }
 

@@ -50,22 +50,18 @@ namespace WebAPI.Controllers
                     case "charinfo":
                         var charinfo = new CharInfo();
                         charinfo.Read(data);
-                        data = charinfo.GetBytes();
                         return new SuccessResponse(charinfo);
-                        break;
 
                     case "charsave":
                         var charsave = new SaveReader("1.13c");
                         charsave.Read(data);
                         var charsaveResponse = new CharSaveResponse(charsave);
                         return new SuccessResponse(charsaveResponse);
-                        break;
 
                     case "charitem":
                         var charitem = Item.NewItem(data);
                         var charitemResponse = new CharItemResponse(charitem);
                         return new SuccessResponse(charitemResponse);
-                        break;
 
                     default:
                         return new ErrorResponse("PARAM_MISS", "Type parameter is empty (allowed: charinfo, charsave, charitem)");

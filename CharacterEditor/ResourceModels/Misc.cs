@@ -22,7 +22,7 @@ namespace CharacterEditor.ResourceModels
         public string nodurability { get; set; }
         public string cost { get; set; }
         [Name("gamble cost")]
-        public string gamble_cost { get; set; }
+        public string gambleCost { get; set; }
         public string code { get; set; }
         public string alternategfx { get; set; }
         public string namestr { get; set; }
@@ -166,9 +166,9 @@ namespace CharacterEditor.ResourceModels
         public string JamellaMagicMax { get; set; }
         public string JamellaMagicLvl { get; set; }
         [Name("Source Art")]
-        public string Source_Art { get; set; }
+        public string SourceArt { get; set; }
         [Name("Game Art")]
-        public string Game_Art { get; set; }
+        public string GameArt { get; set; }
         public string Transform { get; set; }
         public string InvTrans { get; set; }
         public string SkipName { get; set; }
