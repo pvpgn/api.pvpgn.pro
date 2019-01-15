@@ -41,6 +41,21 @@ namespace CharacterEditor
         /// </summary>
         private byte[] OriginalInventoryBytes;
 
+        public int Version
+        {
+            get
+            {
+                return BitConverter.ToInt32(OriginalBytes, 4);
+            }
+        }
+        public int TimeStamp
+        {
+            get
+            {
+                return BitConverter.ToInt32(OriginalBytes, 48);
+            }
+        }
+
         /// <summary>
         /// Character's inventory
         /// </summary>
@@ -179,7 +194,7 @@ namespace CharacterEditor
 			}
             if (rawCharacterData.Length == 130)
             {
-                throw new EndOfStreamException("New D2GS characters are not supported");
+                throw new EndOfStreamException("Brand new D2GS characters are not supported");
             }
 
             OriginalBytes = rawCharacterData;

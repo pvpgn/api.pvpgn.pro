@@ -34,6 +34,8 @@ namespace CharacterEditor
         /// <returns></returns>
         public string FindString(string key)
         {
+            if (string.IsNullOrWhiteSpace(key))
+                return string.Empty;
             foreach (var t in tables)
             {
                 if (t.Value.ContainsKey(key))

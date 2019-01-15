@@ -24,6 +24,9 @@ namespace WebAPI.D2Char
             Hash = (hash != null) ? hash : Helper.MD5(Data);
             HashWithOriginalStat = (hash != null) ? hash : Helper.MD5(playerData.GetBytes(true, true)); // true is important!;
 
+            Version = playerData.Version;
+            TimeStamp = playerData.TimeStamp;
+
             // items
             foreach (var i in playerData.Inventory.PlayerItems)
                 PlayerItems.Add(new CharItemResponse(i));
@@ -33,7 +36,6 @@ namespace WebAPI.D2Char
                 GolemItems.Add(new CharItemResponse(i));
             foreach (var i in playerData.Inventory.MercItems)
                 MercItems.Add(new CharItemResponse(i));
-
 
             Name = playerData.Character.Name;
             Class = playerData.Character.Class;
@@ -141,10 +143,13 @@ namespace WebAPI.D2Char
         public String Hash;
         public String HashWithOriginalStat;
         public byte[] Data;
+        public int Version;
+        public int TimeStamp;
 
         public String Name;
 
         public Character.CharacterClass Class;
+        public string ClassTitle => Class.ToString();
         public bool Died;
         public bool Expansion;
         public bool Hardcore;
@@ -154,6 +159,56 @@ namespace WebAPI.D2Char
         public ushort MercenaryNameId;
         public ushort MercenaryType;
         public byte Progression;
+
+        public string CharTitle
+        {
+            get
+            {
+                var v = Progression;
+                if (Expansion)
+                {
+                    if (v >= 5 && v <= 8)
+                        return Hardcore ? "Destroyer" : "Slayer";
+                    if (v >= 10 && v <= 13)
+                        return Hardcore ? "Conqueror" : "Champion";
+                    if (v == 15)
+                        return Hardcore
+                            ? "Guardian"
+                            : (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
+                                ? "Matriarch"
+                                : "Patriarch";
+                }
+                else
+                {
+                    if (v >= 4 && v <= 7)
+                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
+                            ? Hardcore ? "Countess" : "Dame"
+                            : Hardcore ? "Count" : "Sir";
+                    if (v >= 8 && v <= 11)
+                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
+                            ? Hardcore ? "Duchess" : "Lady"
+                            : Hardcore ? "Duke" : "Lord";
+                    if (v >= 8 && v <= 11)
+                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
+                            ? Hardcore ? "Queen" : "Baroness"
+                            : Hardcore ? "King" : "Baron";
+                }
+                return string.Empty;
+            }
+        }
+        public string DifficultyTitle
+        {
+            get
+            {
+                switch ((Progression & 0x0f) / (Expansion ? 5 : 4))
+                {
+                    case 3: return "Hell";
+                    case 2: return "Nightmare";
+                    default: return "Normal"; // FIXME: 0 and 1
+                }
+            }
+        }
+
         public int BaseHitpoints;
         public int BaseMana;
         public int BaseStamina;

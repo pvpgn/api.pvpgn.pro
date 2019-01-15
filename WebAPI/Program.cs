@@ -18,7 +18,7 @@ namespace WebAPI
         public static void Main(string[] args)
         {
             // set resource path for charsave editor
-            CharacterEditor.Resources.CurrentDirectory = "../CharacterEditor";
+            CharacterEditor.Resources.ResourcePath = "../CharacterEditor";
             new SaveReader("1.13c"); // load resources
 
             CreateWebHostBuilder(args).Build().Run();

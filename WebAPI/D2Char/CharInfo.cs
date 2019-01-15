@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using CharacterEditor;
 using Microsoft.AspNetCore.Rewrite.Internal.UrlMatches;
 using Microsoft.Extensions.Primitives;
 
@@ -40,12 +41,12 @@ namespace WebAPI.D2Char
         public int CreatedTime;
         public int LastSeenTime;
         public int TotalPlayedMinutes; // minutes
-        public string charName;
+        public string Name;
         public string UserName;
         public string RealmName;
 
 
-        public CharClass Class;
+        public Character.CharacterClass Class;
         public string ClassTitle => Class.ToString();
         public int Level;
         public int Version;
@@ -65,22 +66,22 @@ namespace WebAPI.D2Char
                     if (v == 15)
                         return Hardcore
                             ? "Guardian"
-                            : (Class == CharClass.Amazon || Class == CharClass.Assasin || Class == CharClass.Sorceress)
+                            : (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
                                 ? "Matriarch"
                                 : "Patriarch";
                 }
                 else
                 {
                     if (v >= 4 && v <= 7)
-                        return (Class == CharClass.Amazon || Class == CharClass.Assasin || Class == CharClass.Sorceress)
+                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
                             ? Hardcore ? "Countess" : "Dame"
                             : Hardcore ? "Count" : "Sir";
                     if (v >= 8 && v <= 11)
-                        return (Class == CharClass.Amazon || Class == CharClass.Assasin || Class == CharClass.Sorceress)
+                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
                             ? Hardcore ? "Duchess" : "Lady"
                             : Hardcore ? "Duke" : "Lord";
                     if (v >= 8 && v <= 11)
-                        return (Class == CharClass.Amazon || Class == CharClass.Assasin || Class == CharClass.Sorceress)
+                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
                             ? Hardcore ? "Queen" : "Baroness"
                             : Hardcore ? "King" : "Baron";
                 }
@@ -150,7 +151,7 @@ namespace WebAPI.D2Char
                 br.ReadInt32(); // checksum
                 TotalPlayedMinutes = br.ReadInt32(); // total in game play time
                 br.ReadBytes(24); // reserved (skip)
-                charName = Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0');    // 0x30
+                Name = Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0');    // 0x30
                 UserName = Encoding.ASCII.GetString(br.ReadBytes(16)).TrimEnd('\0'); // 0x40
                 RealmName = Encoding.ASCII.GetString(br.ReadBytes(32)).TrimEnd('\0');   // 0x50
 
@@ -173,7 +174,7 @@ namespace WebAPI.D2Char
                 Difficulty = br.ReadByte(); // 0xB4
                 br.ReadInt16(); // skip
                 Level = br.ReadInt32(); // 0xB8
-                Class = (CharClass)br.ReadInt32(); // 0xBC
+                Class = (CharacterEditor.Character.CharacterClass)br.ReadInt32(); // 0xBC
             }
         }
 
@@ -192,7 +193,7 @@ namespace WebAPI.D2Char
                 bw.Write(TotalPlayedMinutes);
                 bw.Write(new byte[24]); // reserved
                 var charName = new char[MAX_CHARNAME_LEN];
-                Encoding.Default.GetBytes(this.charName).CopyTo(charName, 0);
+                Encoding.Default.GetBytes(this.Name).CopyTo(charName, 0);
                 bw.Write(charName);
                 var userName = new char[MAX_USERNAME_LEN];
                 Encoding.Default.GetBytes(UserName).CopyTo(userName, 0);
@@ -241,15 +242,4 @@ namespace WebAPI.D2Char
         public byte[] U2;
     }
 
-
-    public enum CharClass
-    {
-        Amazon = 0,
-        Sorceress = 1,
-        Necromancer = 2,
-        Paladin = 3,
-        Barbarian = 4,
-        Druid = 5,
-        Assasin = 6
-    }
 }

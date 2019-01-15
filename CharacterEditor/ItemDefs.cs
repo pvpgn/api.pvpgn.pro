@@ -217,9 +217,9 @@ namespace CharacterEditor
             }
             if (!IsArmor(item.ItemCode) && !IsWeapon(item.ItemCode))
             {
-                if (Armor.ContainsKey(item.ItemCode))
+                if (Misc.ContainsKey(item.ItemCode))
                 {
-                    var r = Armor[item.ItemCode];
+                    var r = Misc[item.ItemCode];
                     fileName = r.invfile;
                     if (item.Quality == (uint)Item.ItemQuality.Unique && !string.IsNullOrWhiteSpace(r.uniqueinvfile))
                         fileName = r.uniqueinvfile;
@@ -385,5 +385,5 @@ namespace CharacterEditor
 				}
 			}
 		}
-	}
+    }
 }

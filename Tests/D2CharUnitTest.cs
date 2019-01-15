@@ -27,17 +27,17 @@ namespace Tests
             _api = new D2CharController();
 
             // set resource path for charsave editor
-            CharacterEditor.Resources.CurrentDirectory = "../../../../CharacterEditor";
+            CharacterEditor.Resources.ResourcePath = "../../../../CharacterEditor";
             new SaveReader("1.13c"); // load resources
         }
 
         [Fact]
         public void CharInfoTest()
         {
-            var dir = "../Tests/charinfo/";
+            var dir = "../../../charinfo/";
             foreach (var f in getFilesDirAndSubdirs(dir))
             {
-                var fileName = Path.Combine(CharacterEditor.Resources.CurrentDirectory, f);
+                var fileName = f;
                 var fileMock = getMockFIle(fileName);
                 // get json object
                 var result = (Response) _api.Post(fileMock.Object, "charinfo").Value;
@@ -61,10 +61,10 @@ namespace Tests
         [Fact]
         public void CharSaveTest()
         {
-            var dir = "../Tests/charsave/";
+            var dir = "../../../charsave/";
             foreach (var f in getFilesDirAndSubdirs(dir))
             {
-                var fileName = Path.Combine(CharacterEditor.Resources.CurrentDirectory, f);
+                var fileName = f;
                 var fileMock = getMockFIle(fileName);
                 // get json object
                 var result = (Response)_api.Post(fileMock.Object, "charsave").Value;
@@ -95,10 +95,10 @@ namespace Tests
         [Fact]
         public void CharItemTest()
         {
-            var dir = "../Tests/charitem/";
+            var dir = "../../../charitem/";
             foreach (var f in getFilesDirAndSubdirs(dir).Where(s => !s.EndsWith(".gif")))
             {
-                var fileName = Path.Combine(CharacterEditor.Resources.CurrentDirectory, f);
+                var fileName = f;
                 var fileMock = getMockFIle(fileName);
                 // get json object
                 var result = (Response)_api.Post(fileMock.Object, "charitem").Value;

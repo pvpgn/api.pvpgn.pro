@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return new ErrorResponse("READ_ERROR", e.Message);
+                return new ErrorResponse("READ_ERROR", e.Message, e.ToString());
             }
 
             string errorMessage = "";
@@ -69,13 +69,13 @@ namespace WebAPI.Controllers
             }
             catch (EndOfStreamException e3)
             {
-                return new ErrorResponse("D2GSNEWBIE", e3.Message);
+                return new ErrorResponse("D2GSNEWBIE", e3.Message, file.Name);
             }
             catch (Exception e3)
             {
                 errorMessage += "\n\n" + e3.ToString();
             }
-            return new ErrorResponse("BAD_FILE", "Unsupported file format. Only charinfo, charsave and charitem are allowed.\n\n" + errorMessage);
+            return new ErrorResponse("BAD_FILE", "Unsupported file format. Only charinfo, charsave and charitem are allowed.", errorMessage);
         }
 
         // PUT /d2char
@@ -121,12 +121,12 @@ namespace WebAPI.Controllers
                 {
                     var charinfo = JsonConvert.DeserializeObject<CharInfo>(data);
                     var ms = new MemoryStream(charinfo.GetBytes());
-                    return File(ms, "application/octet-stream", charinfo.charName);
+                    return File(ms, "application/octet-stream", charinfo.Name);
                 }
             }
             catch (Exception e)
             {
-                return new ErrorResponse("PARSE_ERROR", e.StackTrace);
+                return new ErrorResponse("PARSE_ERROR", e.Message, e.ToString());
             }
             return new ErrorResponse("BAD_DATA", "Unsupported data format. Use POST method to retrieve proper data structure.");
         }

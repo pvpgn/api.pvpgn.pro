@@ -20,14 +20,16 @@ namespace WebAPI
     }
     public class ErrorResponse : Response
     {
-        public ErrorResponse(string code, string message)
+        public ErrorResponse(string code, string message, string details = "")
         {
             Result = "error";
             ErrorCode = code;
             ErrorMessage = message;
+            ErrorDetails = details;
         }
         public string ErrorCode;
         public string ErrorMessage;
+        public string ErrorDetails;
 
     }
 
