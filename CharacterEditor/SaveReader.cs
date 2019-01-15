@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.IO;
@@ -229,14 +230,86 @@ namespace CharacterEditor
 			{
 				OriginalSkillBytes = skillBytes;
 			}
-		}
 
-		/// <summary>
-		/// Obtains general character information from raw save file data
-		/// </summary>
-		/// <param name="rawCharacterData"></param>
-		/// <returns></returns>
-		private static byte[] GetCharacterBytes(byte[] rawCharacterData)
+            // watch property Level
+            stat.PropertyChanged += (sender, args) =>
+            {
+                if (((PropertyChangedEventArgs) args).PropertyName == "Level")
+                    CorrectLevel(stat.Level);
+            };
+        }
+
+        /// <summary>
+        /// Fix experience for the current level
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
+        public void CorrectLevel(int level)
+        {
+            var maxLevel = ItemDefs.Experience.Max(t => t.Level);
+            // if level out of bounds then set new level, and return to except invinite recursion
+            if (level < 1)
+            {
+                stat.Level = 1;
+                return;
+            }
+            if (level > maxLevel)
+            {
+                stat.Level = maxLevel;
+                return;
+            }
+
+            // set display value
+            character.LevelDisplay = (byte)level;
+
+            // fix experience if out of bounds
+            var idxMin = level + 1;
+            var idxMax = level + 2;
+            if (idxMax > ItemDefs.Experience.Count - 1)
+                idxMax = ItemDefs.Experience.Count - 1;
+            uint expMin = 0, expMax = 0;
+            switch (character.Class)
+            {
+                case Character.CharacterClass.Amazon:
+                    expMin = ItemDefs.Experience[idxMin].Amazon;
+                    expMax = ItemDefs.Experience[idxMax].Amazon;
+                    break;
+                case Character.CharacterClass.Assassin:
+                    expMin = ItemDefs.Experience[idxMin].Assassin;
+                    expMax = ItemDefs.Experience[idxMax].Assassin;
+                    break;
+                case Character.CharacterClass.Barbarian:
+                    expMin = ItemDefs.Experience[idxMin].Barbarian;
+                    expMax = ItemDefs.Experience[idxMax].Barbarian;
+                    break;
+                case Character.CharacterClass.Druid:
+                    expMin = ItemDefs.Experience[idxMin].Druid;
+                    expMax = ItemDefs.Experience[idxMax].Druid;
+                    break;
+                case Character.CharacterClass.Necromancer:
+                    expMin = ItemDefs.Experience[idxMin].Necromancer;
+                    expMax = ItemDefs.Experience[idxMax].Necromancer;
+                    break;
+                case Character.CharacterClass.Paladin:
+                    expMin = ItemDefs.Experience[idxMin].Paladin;
+                    expMax = ItemDefs.Experience[idxMax].Paladin;
+                    break;
+                case Character.CharacterClass.Sorceress:
+                    expMin = ItemDefs.Experience[idxMin].Sorceress;
+                    expMax = ItemDefs.Experience[idxMax].Sorceress;
+                    break;
+            }
+            if (stat.Experience < expMin || stat.Experience >= expMax)
+                stat.Experience = expMin;
+        }
+
+
+        /// <summary>
+        /// Obtains general character information from raw save file data
+        /// </summary>
+        /// <param name="rawCharacterData"></param>
+        /// <returns></returns>
+        private static byte[] GetCharacterBytes(byte[] rawCharacterData)
 		{
 			byte[] characterBytes = new byte[StatListBegin];
 			Array.Copy(rawCharacterData, characterBytes, characterBytes.Length);

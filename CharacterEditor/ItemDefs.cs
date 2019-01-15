@@ -26,6 +26,7 @@ namespace CharacterEditor
         public static Dictionary<string, Weapons> Weapons;
         public static Dictionary<string, Armor> Armor;
         public static Dictionary<string, ItemStatCost> ItemStatCost;
+        public static List<Experience> Experience;
 
         public static TblReader StringTables;
 
@@ -114,6 +115,10 @@ namespace CharacterEditor
             using (var reader = Resources.Instance.OpenResourceText("ItemStatCost.txt"))
             using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
                 ItemStatCost = csv.GetRecords<ItemStatCost>().ToDictionary(t => t.Stat, t => t);
+
+            using (var reader = Resources.Instance.OpenResourceText("Experience.txt"))
+            using (var csv = new CsvReader(reader) { Configuration = { Delimiter = "\t" } })
+                Experience = csv.GetRecords<Experience>().ToList();
         }
 
 
