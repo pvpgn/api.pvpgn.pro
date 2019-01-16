@@ -1,0 +1,663 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="HarpyWar">
+
+    <title>Diablo 2 Character Editor</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"></script>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<h1 style="text-align: center; margin-top: 50px;">Diablo 2 Character Editor</h1>
+
+<div id="drop-area">
+    <form class="my-form">
+        <p>Drag some <u>charinfo</u> or <u>charsave</u> files</p>
+        <input type="file" id="fileElem" multiple accept="*" onchange="handleFiles(this.files)">
+    </form>
+</div>
+
+<div id="char-list"></div>
+<div style="height: 50px;"></div>
+
+<!-- Modal Error -->
+<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalCenterTitle">Error occured</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script id="charinfo-template" type="text/x-handlebars-template">
+
+    <div class="container shadow p-3 mb-5 bg-white rounded char-entry" data-id="{{idx}}">
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home{{idx}}-tab" data-toggle="pill" href="#pills-home{{idx}}" role="tab" aria-controls="pills-home{{idx}}" aria-selected="true">charinfo</a>
+            </li>
+        </ul>
+
+        <form name="char-form" data-id="{{idx}}">
+            <!-- Home Tab -->
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane show active" id="pills-home{{idx}}" role="tabpanel" aria-labelledby="pills-home{{idx}}-tab">
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="name">Character Name</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter charname" value="{{name}}" pattern=".{1,}" maxlength="16" />
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="userName">Account Name</label>
+                            <input type="text" class="form-control" name="userName" id="userName" placeholder="Enter username" value="{{userName}}" pattern=".{1,}" maxlength="16" />
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="realmName">Realm Name</label>
+                            <input type="text" class="form-control" name="realmName" id="realmName" placeholder="Enter realmname" value="{{realmName}}" pattern=".{1,}" maxlength="32" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="died">Expansion</label>
+                            <select name="expansion" id="expansion" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if expansion}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="died">Ladder</label>
+                            <select name="ladder" id="ladder" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if ladder}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="died">Hardcode</label>
+                            <select name="hardcore" id="hardcore" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if hardcore}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="died">Died</label>
+                            <select name="died" id="died" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if died}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="init">Init (new char)</label>
+                            <select name="init" id="init" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if init}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label>Class</label>
+                            <p>
+                                {{classTitle}}
+                                {{#if charTitle}} <span style="font-size: smaller; padding-top: 3px; font-style: italic">({{charTitle}})</span>{{/if}}
+                            </p>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>Level</label>
+                            <p>{{level}}</p>
+                        </div>
+
+                        <div class="form-group col-sm">
+                            <label>Experience</label>
+                            <p>{{experience}}</p>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>Difficulty</label>
+                            <p>{{difficultyTitle}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md">
+                            <label>Created Time</label>
+                            <p>{{formatDate createdTime}}</p>
+                        </div>
+                        <div class="form-group col-md">
+                            <label>Last Seen At</label>
+                            <p>{{formatDate lastSeenTime}}</p>
+                        </div>
+                        <div class="form-group col-md">
+                            <label>Total Played</label>
+                            <p>{{formatTimeUnits totalPlayedMinutes}}</p>
+                        </div>
+                        <div class="form-group col-md">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end">
+                <a href="#" class="btn btn-danger btn-md active" role="button" aria-pressed="true" id="download-file">Save charinfo file</a>
+            </div>
+        </form>
+    </div>
+
+
+</script>
+    
+
+<script id="charsave-template" type="text/x-handlebars-template">
+
+    <div class="container shadow p-3 mb-5 bg-white rounded char-entry" data-id="{{idx}}">
+
+        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home{{idx}}-tab" data-toggle="pill" href="#pills-home{{idx}}" role="tab" aria-controls="pills-home{{idx}}" aria-selected="true">charsave</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-inventory{{idx}}-tab" data-toggle="pill" href="#pills-inventory{{idx}}" role="tab" aria-controls="pills-inventory{{idx}}" aria-selected="false">Inventory</a>
+            </li>
+            {{#if hasMercenary}}
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Mercenary</a>
+            </li>
+            {{/if}}
+        </ul>
+
+        <form name="char-form" data-id="{{idx}}">
+            <!-- Home Tab -->
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane show active" id="pills-home{{idx}}" role="tabpanel" aria-labelledby="pills-home{{idx}}-tab">
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="name">Character Name</label>
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter nickname" value="{{name}}" pattern=".{1,}" maxlength="16" />
+                        </div>
+                        <div class="form-group col-md">
+                        </div>
+                        <div class="form-group col-md">
+                            <label>Last Seen At</label>
+                            <p>{{formatDate timeStamp}}</p>
+                        </div>
+                        <div class="form-group col-md">
+                            <label>Version</label>
+                            <p>{{#ifCond version 96}}1.10/1.11{{else}}Unknown{{/ifCond}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label for="died">Expansion</label>
+                            <select name="expansion" id="expansion" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if expansion}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="died">Ladder</label>
+                            <select name="ladder" id="ladder" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if ladder}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="died">Hardcode</label>
+                            <select name="hardcore" id="hardcore" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if hardcore}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label for="died">Died</label>
+                            <select name="died" id="died" class="form-control">
+                                <option value="false">False</option>
+                                <option value="true" {{#if died}} selected{{/if}}>True</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm">
+                            <label>Class</label>
+                            <p>
+                                {{classTitle}}
+                                {{#if charTitle}} <span style="font-size: smaller; padding-top: 3px; font-style: italic">({{charTitle}})</span>{{/if}}
+                            </p>
+                        </div>
+
+                        <div class="form-group col-sm">
+                            <label for="level">Level</label>
+                            <div class="col-sm"><input type="number" class="form-control" name="level" id="level" value="{{level}}" min="0" max="99" /></div>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>Experience</label>
+                            <p>{{experience}}</p>
+                        </div>
+                        <div class="form-group col-sm">
+                            <label>Difficulty</label>
+                            <p>{{difficultyTitle}}</p>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-5">
+                            <div class="card">
+                                <div class="card-header">
+                                    Constitution
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Vitality / Max</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="vitality" id="vitality" value="{{vitality}}" min="0" max="8191" /></div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="vitality" id="vitality" value="{{baseHitpoints}}" min="0" max="8191" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Mana / Max</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="mana" id="mana" value="{{mana}}" min="0" max="8191" /></div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="mana" id="mana" value="{{baseMana}}" min="0" max="8191" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Stamina / Max</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="stamina" id="stamina" value="{{stamina}}" min="0" max="8191" /></div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="stamina" id="stamina" value="{{baseStamina}}" min="0" max="8191" /></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div class="card">
+                                <div class="card-header">
+                                    Characteristics
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Strength</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="strength" id="strength" value="{{strength}}" min="0" max="1023" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Dexterity</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="dexterity" id="dexterity" value="{{dexterity}}" min="0" max="1023" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Vitality</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="vitality" id="vitality" value="{{vitality}}" min="0" max="1023" /></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    Values
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Person Gold</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="gold" id="gold" value="{{gold}}" min="0" max="390000" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Stash Gold</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="goldBank" id="goldBank" value="{{goldBank}}" min="0" max="1000000" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Stat Points Left</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="statPoints" id="statPoints" value="{{statPoints}}" min="0" max="4294967295" /></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Inventory Tab -->
+                <div class="tab-pane" id="pills-inventory{{idx}}" role="tabpanel" aria-labelledby="pills-inventory{{idx}}-tab">
+                    <div style="background: silver; padding: 15px; margin-bottom: 10px;">
+                    {{#each playerItems}}
+                        <img src="/{{this.displayData.imagePath}}" border="0" alt="{{this.displayData.imageFile}}" data-toggle="tooltip" data-placement="top" title="{{this.displayData.title}} {{#if this.displayDatauniqueSetName}}[{{this.displayDatauniqueSetName}}]{{/if}}" /> &nbsp;
+                    {{/each}}
+                    </div>
+                </div>
+
+                <!-- Mercenary Tab -->
+                <div class="tab-pane" id="pills-merc{{idx}}" role="tabpanel" aria-labelledby="pills-merc{{idx}}-tab"></div>
+            </div>
+
+            <div class="d-flex">
+                <div style="font-size: 18px; color: gray;">
+                    #{{inc idx}}
+                </div>
+                <div class="ml-auto">
+                    <a href="#" class="btn btn-danger btn-md active" role="button" aria-pressed="true" id="download-file">Save charsave file</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</script>
+
+<script>
+    var API_URL = "https://api.pvpgn.pro";
+    //API_URL = "http://localhost:40807";
+    
+    var charObjects = [];
+    var dropArea = document.getElementById('drop-area');
+
+
+
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    dropArea.addEventListener('drop', handleDrop, false);
+    dropArea.addEventListener('click', function () {
+        $("#fileElem").click();
+    }, false);
+
+
+
+    function highlight(e) {
+        dropArea.classList.add('highlight');
+    }
+
+    function unhighlight(e) {
+        dropArea.classList.remove('highlight');
+    }
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+
+    function handleDrop(e) {
+        var dt = e.dataTransfer;
+        var files = dt.files;
+
+        handleFiles(files);
+    }
+
+    function handleFiles(files) {
+        ([...files]).forEach(f => {
+            console.log(f);
+            uploadFile(f, 'charinfo');
+        });
+    }
+
+    function uploadFile(file, type) {
+
+        // 100 kb max (charsave and charinfo can't reach this size)
+        if (file.size > 102400)
+            return throwError("Invalid file");
+
+        var url = API_URL + '/d2char?type=' + type;
+        var xhr = new XMLHttpRequest();
+        var formData = new FormData();
+        xhr.open('POST', url, true);
+
+        xhr.addEventListener('readystatechange',
+            function (e) {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Done. Inform the user
+                    var json = JSON.parse(xhr.responseText);
+                    console.log(json);
+                    if (json.result === "error") {
+                        if (type === 'charinfo') {
+                            // try the same file with charsave type
+                            uploadFile(file, 'charsave');
+                        } else {
+                            return throwError(json.errorMessage);
+                        }
+                    } else {
+                        var node = document.getElementById("char-list");
+                        charObjects.push(json.data);
+                        var idx = charObjects.length - 1; // get last element index
+                        charObjects[idx].idx = idx; // add new field with index
+
+                        if (json.data.fileType !== 'charinfo' && json.data.fileType !== 'charsave') {
+                            return throwError("Unsupported file type"); // charitem
+                        }
+                        // render new html chunk
+                        node.insertAdjacentHTML('afterbegin', renderCharEntryHtml(json.data.fileType, charObjects[idx]));
+                        $('[data-toggle="tooltip"]').tooltip();
+                        $(".char-entry[data-id='" + idx + "']").on("click", "#download-file", function(e) {
+                            downloadModifiedChar(idx);
+                            return false;
+                        });
+                    }
+                } else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
+                    // Error. Inform the user
+                    console.log("error");
+                }
+                return 0;
+            });
+
+        formData.append('file', file);
+        xhr.send(formData);
+    }
+
+
+    function renderCharEntryHtml(chartype, data) {
+        var source = document.getElementById(chartype + "-template").innerHTML;
+        var template = Handlebars.compile(source);
+        return template(data);
+    }
+
+    function downloadModifiedChar(idx) {
+        var url = API_URL + '/d2char';
+        var xhr = new XMLHttpRequest();
+
+        var formElement = document.querySelector("form[data-id='" + idx + "']");
+        var formData = new FormData(formElement);
+        xhr.open('PUT', url, true);
+
+        xhr.addEventListener('readystatechange',
+            function (e) {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                    // Done. Inform the user
+                    try {
+                        var json = JSON.parse(xhr.responseText);
+                        return throwError(json.errorMessage);
+                    } catch (e) {
+                        // json decode should fail and here we get the response as a file
+                        downloadFile(xhr.response, charObjects[idx].name.toLowerCase());
+                    }
+
+                } else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
+                    // Error. Inform the user
+                    return throwError("error" + xhr.status);
+                }
+                return 0;
+            });
+
+        // replace data of char with form fields
+        for (var pair of formData.entries()) {
+            charObjects[idx][pair[0]] = pair[1]; 
+        }
+
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.responseType = 'blob';
+        xhr.send(JSON.stringify(charObjects[idx]));
+    }
+
+    // download data string in a browser
+    function downloadFile(data, filename) {
+        var blob = new Blob([data], { type: 'application/octet-stream' });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = filename;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+    }
+
+    // display error modal
+    function throwError(message, extendedMessage) {
+        $(".modal-body").html(message);
+        $("#errorModal").modal('show');
+
+        console.log(message);
+        return message;
+    }
+
+
+    /* handlebars helpers */
+    Handlebars.registerHelper('formatDate', function(timestamp, options) {
+        var date = new Date(timestamp * 1000);
+        return date.toLocaleString();
+    });
+
+    Handlebars.registerHelper('formatTimeUnits', function(units, options) {
+        var minutes = units % 60;
+        var hours = Math.floor(units / 60) % 24;
+        var days = Math.floor(hours / 60 / 24);
+        var ouput = days > 0 ? days + " days " : '';
+        ouput += hours > 0 ? hours + " hours " : '';
+        ouput += minutes + " minutes";
+        return ouput;
+    });
+
+    Handlebars.registerHelper('ifCond', function (v1, v2, options) {
+        if (v1 === v2) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+
+    Handlebars.registerHelper("inc", function(value, options)
+    {
+        return parseInt(value) + 1;
+    });
+</script>
+
+
+
+<style>
+    
+    .char-entry {
+        margin-top: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid silver;
+    }
+
+
+    /* Bootstrap replacements */
+    label, .label {
+        color: #501605;
+        font-weight: bold;
+        font-size: smaller;
+    }
+    .prop-group div {
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    a, a:hover, a:active {
+        color: #bd2130;
+    }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        background: #bd2130;
+    }
+
+     /* drop file */
+    #drop-area {
+        border: 2px dashed #ccc;
+        font-size: 18px;
+        border-radius: 20px;
+        width: 480px;
+        margin: 50px auto;
+        padding: 20px;
+        height: 100px; 
+        text-align: center; 
+        padding-top: 35px;
+        background: beige;
+        cursor: pointer;
+    }
+
+    #drop-area.highlight {
+        border-color: purple;
+        background: whitesmoke;
+    }
+
+    p {
+        margin-top: 0;
+    }
+
+    .my-form {
+        margin-bottom: 10px;
+    }
+
+    #gallery {
+        margin-top: 10px;
+    }
+
+    #gallery img {
+        width: 150px;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+
+
+    #fileElem {
+        display: none;
+    }
+</style>
+
+</body>
+</html>
