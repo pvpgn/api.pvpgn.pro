@@ -71,7 +71,7 @@ namespace Tests
                 if (result.Result == "error")
                 {
                     // it should correct determine newbie files
-                    Assert.Equal("D2GSNEWBIE", ((ErrorResponse)result).ErrorCode);
+                    Assert.Equal("NOT_SUPPORTED", ((ErrorResponse)result).ErrorCode);
                     continue;
                 }
                 Assert.Equal("success", result.Result);

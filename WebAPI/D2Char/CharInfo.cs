@@ -50,7 +50,7 @@ namespace WebAPI.D2Char
         public string ClassTitle => Class.ToString();
         public int Level;
         public int Version;
-        public int Experience;
+        public uint Experience;
 
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace WebAPI.D2Char
                 br.ReadBytes(D2CHARINFO_PORTRAIT_PADSIZE);
 
                 // summary
-                Experience = br.ReadInt32(); // 0xB0
+                Experience = br.ReadUInt32(); // 0xB0
                 _statusByte = br.ReadByte(); // 0xB4
                 Difficulty = br.ReadByte(); // 0xB4
                 br.ReadInt16(); // skip

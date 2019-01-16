@@ -59,9 +59,9 @@ namespace WebAPI.D2Char
             StatPoints = playerData.Stat.StatPoints;
             Strength = playerData.Stat.Strength;
             Vitality = playerData.Stat.Vitality;
-
-            foreach (var i in playerData.Skill)
-                Skills.Add(byte.Parse(i.ToString()));
+            
+            for (var i = 0; i < playerData.Skill.Length; i++)
+                Skills.Add(byte.Parse(playerData.Skill[i].ToString()));
         }
 
         /// <summary>
@@ -116,9 +116,9 @@ namespace WebAPI.D2Char
             playerData.Stat.Strength = Strength;
             playerData.Stat.Vitality = Vitality;
 
-            // start from 2-d byte (skip "if" header)
-            for (var i = 2; i < Skills.Count; i++)
-                playerData.Skill[i - 2] = Skills[i];
+            // start from 2-d byte (skip "if" header on the destination)
+            for (var i = 0; i < Skills.Count; i++)
+                playerData.Skill[i] = Skills[i];
 
             return playerData;
         }
