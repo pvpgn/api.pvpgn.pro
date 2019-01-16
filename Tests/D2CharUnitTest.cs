@@ -84,11 +84,12 @@ namespace Tests
                 byte[] bytes = new byte[putResult.FileStream.Length];
                 putResult.FileStream.Read(bytes, 0, (int)putResult.FileStream.Length);
 
-                // compare returned bytes with original file
-                // (do not compare bytes here, because it will be incorrect if stat differs - it may differ often even with equal values)
+                // compare returned hash without stat with original file
+                // (do not compare returned bytes here, because it will be incorrect if stat differs,
+                //  it may differ often even if all props are equal)
                 Assert.Equal(obj.HashWithOriginalStat, Helper.MD5(File.ReadAllBytes(fileName)));
-                // here we just check that returned json data was correctly converted into bytes
-                Assert.Equal(obj.Hash, Helper.MD5(bytes));
+                // here we check that returned json data was correctly converted into returned bytes
+                Assert.Equal(f + obj.Hash, f + Helper.MD5(bytes));
             }
         }
 

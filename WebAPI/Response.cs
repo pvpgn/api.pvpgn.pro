@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace WebAPI
 {
     public class Response
@@ -20,10 +16,10 @@ namespace WebAPI
     }
     public class ErrorResponse : Response
     {
-        public ErrorResponse(string code, string message, string details = "")
+        public ErrorResponse(ErrorCode code, string message, string details = "")
         {
             Result = "error";
-            ErrorCode = code;
+            ErrorCode = code.ToString();
             ErrorMessage = message;
             ErrorDetails = details;
         }
@@ -33,4 +29,13 @@ namespace WebAPI
 
     }
 
+
+    public enum ErrorCode
+    {
+        INTERNAL_ERROR, // internal service error
+        LIMIT_REACHED, // api limitations was reached
+        BAD_DATA, // bad data passed to api
+        NOT_SUPPORTED, // possible good data but unsupported in this version of api
+        MISS_PARAM // missed parameter
+    }
 }

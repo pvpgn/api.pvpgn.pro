@@ -17,9 +17,10 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         // GET /bnethash/hello
         [HttpGet("{password}")]
-        public string Get(string password)
+        public Response Get(string password)
         {
-            return PvpgnHash.GetHash(password);
+            var hash = PvpgnHash.GetHash(password);
+            return new SuccessResponse(hash);
         }
 
         /// <summary>
@@ -29,12 +30,14 @@ namespace WebAPI.Controllers
         /// <returns></returns>
         // POST /bnethash
         [HttpPost]
-        public string[] Post([FromBody]string[] passwords)
+        public Response Post([FromBody]string[] passwords)
         {
+            if (passwords.Length > 1000)
+                return new ErrorResponse(ErrorCode.LIMIT_REACHED, "Max 1000 passwords are allowed per a request");
             var hashes = new string[passwords.Length];
             for (var i = 0; i < passwords.Length; i++)
                 hashes[i] = PvpgnHash.GetHash(passwords[i]);
-            return hashes;
+            return new SuccessResponse(hashes);
         }
     }
 }

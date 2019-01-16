@@ -190,7 +190,7 @@ namespace CharacterEditor
 			get { return GetStatValue("level"); }
 			set
 			{
-				SetStatValue("level", (byte)value);
+				SetStatValue("level", value);
 				OnPropertyChange("Level");
 			}
 		}

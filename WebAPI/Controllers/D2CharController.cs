@@ -36,7 +36,7 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return new ErrorResponse("READ_ERROR", e.Message, e.ToString());
+                return new ErrorResponse(ErrorCode.INTERNAL_ERROR, e.Message, e.ToString());
             }
 
             string errorMessage = "";
@@ -64,18 +64,18 @@ namespace WebAPI.Controllers
                         return new SuccessResponse(charitemResponse);
 
                     default:
-                        return new ErrorResponse("PARAM_MISS", "Type parameter is empty (allowed: charinfo, charsave, charitem)");
+                        return new ErrorResponse(ErrorCode.MISS_PARAM, "Type parameter is empty (allowed: charinfo, charsave, charitem)");
                 }
             }
             catch (EndOfStreamException e3)
             {
-                return new ErrorResponse("D2GSNEWBIE", e3.Message, file.Name);
+                return new ErrorResponse(ErrorCode.NOT_SUPPORTED, e3.Message, file.Name);
             }
             catch (Exception e3)
             {
                 errorMessage += "\n\n" + e3.ToString();
             }
-            return new ErrorResponse("BAD_FILE", "Unsupported file format. Only charinfo, charsave and charitem are allowed.", errorMessage);
+            return new ErrorResponse(ErrorCode.BAD_DATA, "Bad file format. Only charinfo, charsave and charitem are allowed.", errorMessage);
         }
 
         // PUT /d2char
@@ -101,7 +101,7 @@ namespace WebAPI.Controllers
                     charsave.Read(charsaveResponse.Data);
 
                     // replace stats and items from response
-                    charsave = charsaveResponse.GetChar(charsave);
+                    charsave = charsaveResponse.GetCharacter(charsave);
                     var ms = new MemoryStream(charsave.GetBytes(true)); // true is important!
                     return File(ms, "application/octet-stream", charsave.Character.Name);
                 }
@@ -126,9 +126,9 @@ namespace WebAPI.Controllers
             }
             catch (Exception e)
             {
-                return new ErrorResponse("PARSE_ERROR", e.Message, e.ToString());
+                return new ErrorResponse(ErrorCode.BAD_DATA, e.Message, e.ToString());
             }
-            return new ErrorResponse("BAD_DATA", "Unsupported data format. Use POST method to retrieve proper data structure.");
+            return new ErrorResponse(ErrorCode.NOT_SUPPORTED, "Unsupported fileType. Use POST method to retrieve proper data structure.");
         }
     }
 }

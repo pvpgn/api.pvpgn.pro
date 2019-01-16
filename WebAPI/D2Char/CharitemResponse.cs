@@ -12,9 +12,6 @@ namespace WebAPI.D2Char
     /// </summary>
     public class CharItemResponse : CharacterResponse
     {
-        // TODO: 1) html field - load in config names and titles from Diablo 2 resources
-        //       create additional fields for these
-        //       2) gfx field  for image
         public CharItemResponse() { }
 
         public CharItemResponse(Item item)

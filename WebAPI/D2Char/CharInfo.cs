@@ -52,42 +52,6 @@ namespace WebAPI.D2Char
         public int Version;
         public int Experience;
 
-        public string CharTitle
-        {
-            get
-            {
-                var v = Difficulty;
-                if (Expansion)
-                {
-                    if (v >= 5 && v <= 8)
-                        return Hardcore ? "Destroyer" : "Slayer";
-                    if (v >= 10 && v <= 13)
-                        return Hardcore ? "Conqueror" : "Champion";
-                    if (v == 15)
-                        return Hardcore
-                            ? "Guardian"
-                            : (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                                ? "Matriarch"
-                                : "Patriarch";
-                }
-                else
-                {
-                    if (v >= 4 && v <= 7)
-                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                            ? Hardcore ? "Countess" : "Dame"
-                            : Hardcore ? "Count" : "Sir";
-                    if (v >= 8 && v <= 11)
-                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                            ? Hardcore ? "Duchess" : "Lady"
-                            : Hardcore ? "Duke" : "Lord";
-                    if (v >= 8 && v <= 11)
-                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                            ? Hardcore ? "Queen" : "Baroness"
-                            : Hardcore ? "King" : "Baron";
-                }
-                return string.Empty;
-            }
-        }
 
         /// <summary>
         /// Character is new. This flag is set to 0 by D2GS server after a first game
@@ -120,18 +84,8 @@ namespace WebAPI.D2Char
 
         public byte Difficulty;
 
-        public string DifficultyTitle
-        {
-            get
-            {
-                switch ((Difficulty & 0x0f) / (Expansion ? 5 : 4))
-                {
-                    case 3: return "Hell";
-                    case 2: return "Nightmare";
-                    default: return "Normal"; // FIXME: 0 and 1
-                }
-            }
-        }
+        public string CharTitle => Character.GetCharTitle(Difficulty, Expansion, Hardcore, Class);
+        public string DifficultyTitle => Character.GetDiffucultyTitle(Difficulty, Expansion);
         private byte _statusByte;
 
         public CharPortrait Portrait;

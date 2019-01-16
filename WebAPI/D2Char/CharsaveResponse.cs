@@ -7,15 +7,8 @@ using CharacterEditor;
 
 namespace WebAPI.D2Char
 {
-    public class CharacterResponse
-    {
-        public string FileType;
-    }
-
-
     public class CharSaveResponse : CharacterResponse
     {
-
         public CharSaveResponse() { }
 
         public CharSaveResponse(SaveReader playerData, string hash = null)
@@ -75,7 +68,7 @@ namespace WebAPI.D2Char
         /// Replace character stats and items
         /// </summary>
         /// <param name="playerData"></param>
-        public SaveReader GetChar(SaveReader playerData)
+        public SaveReader GetCharacter(SaveReader playerData)
         {
             playerData.Inventory.PlayerItems.Clear();
             foreach (var i in PlayerItems)
@@ -123,18 +116,14 @@ namespace WebAPI.D2Char
             playerData.Stat.Strength = Strength;
             playerData.Stat.Vitality = Vitality;
 
-            // starting from 2-d byte (pass "if" header)
+            // start from 2-d byte (skip "if" header)
             for (var i = 2; i < Skills.Count; i++)
                 playerData.Skill[i - 2] = Skills[i];
 
             return playerData;
         }
 
-
         public List<CharItemResponse> PlayerItems = new List<CharItemResponse>();
-
-
-
         public List<CharItemResponse> CorpseItems = new List<CharItemResponse>();
         public List<CharItemResponse> GolemItems = new List<CharItemResponse>();
         public List<CharItemResponse> MercItems = new List<CharItemResponse>();
@@ -160,54 +149,8 @@ namespace WebAPI.D2Char
         public ushort MercenaryType;
         public byte Progression;
 
-        public string CharTitle
-        {
-            get
-            {
-                var v = Progression;
-                if (Expansion)
-                {
-                    if (v >= 5 && v <= 8)
-                        return Hardcore ? "Destroyer" : "Slayer";
-                    if (v >= 10 && v <= 13)
-                        return Hardcore ? "Conqueror" : "Champion";
-                    if (v == 15)
-                        return Hardcore
-                            ? "Guardian"
-                            : (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                                ? "Matriarch"
-                                : "Patriarch";
-                }
-                else
-                {
-                    if (v >= 4 && v <= 7)
-                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                            ? Hardcore ? "Countess" : "Dame"
-                            : Hardcore ? "Count" : "Sir";
-                    if (v >= 8 && v <= 11)
-                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                            ? Hardcore ? "Duchess" : "Lady"
-                            : Hardcore ? "Duke" : "Lord";
-                    if (v >= 8 && v <= 11)
-                        return (Class == Character.CharacterClass.Amazon || Class == Character.CharacterClass.Assassin || Class == Character.CharacterClass.Sorceress)
-                            ? Hardcore ? "Queen" : "Baroness"
-                            : Hardcore ? "King" : "Baron";
-                }
-                return string.Empty;
-            }
-        }
-        public string DifficultyTitle
-        {
-            get
-            {
-                switch ((Progression & 0x0f) / (Expansion ? 5 : 4))
-                {
-                    case 3: return "Hell";
-                    case 2: return "Nightmare";
-                    default: return "Normal"; // FIXME: 0 and 1
-                }
-            }
-        }
+        public string CharTitle => Character.GetCharTitle(Progression, Expansion, Hardcore, Class);
+        public string DifficultyTitle => Character.GetDiffucultyTitle(Progression, Expansion);
 
         public int BaseHitpoints;
         public int BaseMana;

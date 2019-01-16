@@ -263,10 +263,8 @@ namespace CharacterEditor
             character.LevelDisplay = (byte)level;
 
             // fix experience if out of bounds
-            var idxMin = level + 1;
-            var idxMax = level + 2;
-            if (idxMax > ItemDefs.Experience.Count - 1)
-                idxMax = ItemDefs.Experience.Count - 1;
+            var idxMin = level;
+            var idxMax = level + 1;
             uint expMin = 0, expMax = 0;
             switch (character.Class)
             {
@@ -299,7 +297,8 @@ namespace CharacterEditor
                     expMax = ItemDefs.Experience[idxMax].Sorceress;
                     break;
             }
-            if (stat.Experience < expMin || stat.Experience >= expMax)
+            // if experience out of bounds then set to minimal for the current level
+            if (stat.Experience < expMin || stat.Experience > expMax)
                 stat.Experience = expMin;
         }
 

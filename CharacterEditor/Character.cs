@@ -267,9 +267,70 @@ namespace CharacterEditor
 			return characterBytes;
 		}
 
-		#region INotifyPropertyChanged Members
+        /// <summary>
+        /// Return character progression Title based on it's flags
+        /// </summary>
+        /// <param name="difficulty">aka progression</param>
+        /// <param name="expansion"></param>
+        /// <param name="hardcore"></param>
+        /// <param name="charClass"></param>
+        /// <returns></returns>
+        public static string GetCharTitle(byte difficulty, bool expansion, bool hardcore, Character.CharacterClass charClass)
+        {
+            {
+                var v = difficulty;
+                if (expansion)
+                {
+                    if (v >= 5 && v <= 8)
+                        return hardcore ? "Destroyer" : "Slayer";
+                    if (v >= 10 && v <= 13)
+                        return hardcore ? "Conqueror" : "Champion";
+                    if (v == 15)
+                        return hardcore
+                            ? "Guardian"
+                            : (charClass == Character.CharacterClass.Amazon || charClass == Character.CharacterClass.Assassin || charClass == Character.CharacterClass.Sorceress)
+                                ? "Matriarch"
+                                : "Patriarch";
+                }
+                else
+                {
+                    if (v >= 4 && v <= 7)
+                        return (charClass == Character.CharacterClass.Amazon || charClass == Character.CharacterClass.Assassin || charClass == Character.CharacterClass.Sorceress)
+                            ? hardcore ? "Countess" : "Dame"
+                            : hardcore ? "Count" : "Sir";
+                    if (v >= 8 && v <= 11)
+                        return (charClass == Character.CharacterClass.Amazon || charClass == Character.CharacterClass.Assassin || charClass == Character.CharacterClass.Sorceress)
+                            ? hardcore ? "Duchess" : "Lady"
+                            : hardcore ? "Duke" : "Lord";
+                    if (v >= 8 && v <= 11)
+                        return (charClass == Character.CharacterClass.Amazon || charClass == Character.CharacterClass.Assassin || charClass == Character.CharacterClass.Sorceress)
+                            ? hardcore ? "Queen" : "Baroness"
+                            : hardcore ? "King" : "Baron";
+                }
+                return string.Empty;
+            }
+        }
 
-		public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Get title of character difficulty based on it's flags
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <param name="expansion"></param>
+        /// <returns></returns>
+        public static string GetDiffucultyTitle(byte difficulty, bool expansion)
+        {
+            switch ((difficulty & 0x0f) / (expansion ? 5 : 4))
+            {
+                case 3: return "Hell";
+                case 2: return "Nightmare";
+                default: return "Normal"; // FIXME: 0 and 1
+            }
+        }
+
+
+       #region INotifyPropertyChanged Members
+
+       public event PropertyChangedEventHandler PropertyChanged;
 
 		private void OnPropertyChange(string propertyName)
 		{
