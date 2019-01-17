@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<h1 style="text-align: center; margin-top: 50px;">Diablo 2 Character Editor</h1>
+<h1 style="text-align: center; margin-top: 50px;">Diablo 2 Character Editor <sup><a style="font-size: 12px" href="https://github.com/pvpgn/api.pvpgn.pro/blob/master/WebAPI/wwwroot/example/d2edit/index.html">source</a></sup></h1>
 
 <div id="drop-area">
     <form class="my-form">
@@ -318,6 +318,12 @@
                                         <div class="row">
                                             <div class="col-sm label">Vitality</div>
                                             <div class="col-sm"><input type="number" class="form-control" name="vitality" id="vitality" value="{{vitality}}" min="0" max="1023" /></div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item prop-group">
+                                        <div class="row">
+                                            <div class="col-sm label">Energy</div>
+                                            <div class="col-sm"><input type="number" class="form-control" name="energy" id="energy" value="{{energy}}" min="0" max="1023" /></div>
                                         </div>
                                     </li>
                                 </ul>

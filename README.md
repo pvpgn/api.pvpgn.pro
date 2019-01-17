@@ -11,6 +11,6 @@ For more info see [Wiki](https://github.com/pvpgn/api.pvpgn.pro/wiki)
 
 1. [Install .NET Core](https://dotnet.microsoft.com/download/linux-package-manager/debian9/sdk-current) for your platform
 2. Clone this repository, cd into `WebAPI` directory and execute `dotnet run`
-3. The server is running and available to serve on port 8080
+3. The server is running and available to serve on port 8080 (port can be changed in Program.cs)
 
 See also [Running in production](Running-in-production)
