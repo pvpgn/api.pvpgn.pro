@@ -323,7 +323,8 @@ namespace WebAPI.D2Char
                 ParamValue = prop.ParamValue;
                 IsAdditionalProperty = prop.IsAdditionalProperty;
 
-                Description = ItemDefs.GetPropDescription(prop);
+				// UNDONE:
+                //Description = ItemDefs.GetPropDescription(prop);
             }
 
             /// <summary>
