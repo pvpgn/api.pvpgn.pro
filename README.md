@@ -2,6 +2,7 @@
 API is represented by several methods:
 * [/d2char](https://github.com/pvpgn/api.pvpgn.pro/wiki/d2char-method)
 * [/bnethash](https://github.com/pvpgn/api.pvpgn.pro/wiki/bnethash-method)
+* [/bnethash/crack](https://github.com/pvpgn/api.pvpgn.pro/wiki/bnethash-method#get-bnethashcrackhash)
 
 [Diablo 2 Character Editor](https://api.pvpgn.pro/example/d2edit) is an example of usage /d2char.
 
