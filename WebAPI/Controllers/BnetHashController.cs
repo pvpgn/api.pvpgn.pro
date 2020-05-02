@@ -39,5 +39,27 @@ namespace WebAPI.Controllers
                 hashes[i] = PvpgnHash.GetHash(passwords[i]);
             return new SuccessResponse(hashes);
         }
+
+        /// <summary>
+        /// Return cracked password from xsha1 hash
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        // GET /bnethash/crack/7b74e0970b2e55e863a9a5f17ce74eaa7d6933e8
+        [HttpGet("crack/{hash}")]
+        public Response Crack(string hash)
+        {
+            if (hash.Length != 40)
+                return new ErrorResponse(ErrorCode.BAD_DATA, "Invalid xsha1 hash");
+            var xsha1 = new xsha1rev(); 
+            var pass = xsha1.Crack16(hash);
+            if (pass.Length == 0)
+                return new ErrorResponse(ErrorCode.INTERNAL_ERROR, "Password is too strong for me");
+
+            // FIXME: here we can crack up to 20 characters if 16 was not found, but it takes much cpu time
+            //var pass = xsha1.Crack20(hash);
+
+            return new SuccessResponse(pass);
+        }
     }
 }
