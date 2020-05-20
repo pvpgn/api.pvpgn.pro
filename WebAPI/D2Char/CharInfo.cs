@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using CharacterEditor;
-using Microsoft.AspNetCore.Rewrite.Internal.UrlMatches;
 using Microsoft.Extensions.Primitives;
 
 namespace WebAPI.D2Char

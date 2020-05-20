@@ -8,7 +8,8 @@ using WebAPI.BnetHash;
 namespace WebAPI.Controllers
 {
     [Route("bnethash")]
-    public class BnetHashController : Controller
+    [ApiController]
+    public class BnetHashController : ControllerBase
     {
         /// <summary>
         /// Return hash of a single password

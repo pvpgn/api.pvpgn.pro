@@ -10,7 +10,6 @@ using WebAPI;
 using WebAPI.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Moq;
 using Newtonsoft.Json;
 using WebAPI.D2Char;
