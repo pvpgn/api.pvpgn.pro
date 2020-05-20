@@ -727,7 +727,7 @@ namespace WebAPI.BnetHash
         {
             int len = 20;
             uint last = x[4 + offset];
-            char ch;
+            //char ch;
 
             if (x[4 + offset] == 0)
             {

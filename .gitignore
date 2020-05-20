@@ -1,7 +1,9 @@
 .localhistory
 .vs
+dev
 */bin
 */obj
 
 *.suo
 *.user
+*.zip
