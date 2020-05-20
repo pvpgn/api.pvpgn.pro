@@ -17,16 +17,26 @@ namespace WebAPI
     {
         public static void Main(string[] args)
         {
+            var dirName = "CharacterEditor";
+            var resourcesPath = Directory.Exists(dirName)
+                ? dirName
+                : "../" + dirName;
+
+            if (!Directory.Exists(resourcesPath))
+            {
+                Console.WriteLine($"Directory '{dirName}' with resources is not found");
+                Environment.Exit(2);
+            }    
+
             // set resource path for charsave editor
-            CharacterEditor.Resources.ResourcePath = "../CharacterEditor";
+            CharacterEditor.Resources.ResourcePath = resourcesPath;
             new SaveReader("1.13c"); // load resources
 
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) => 
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseUrls("http://0.0.0.0:8080");
+                .UseStartup<Startup>();
     }
 }
