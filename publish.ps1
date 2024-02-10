@@ -17,8 +17,10 @@ Function Pack($dir, $arch)
 	mkdir -p $dir\CharacterEditor\Resources
 	# copy resources
 	xcopy /y /s /e CharacterEditor\Resources $dir\CharacterEditor\Resources
-	# create zip archive in the root
-	& $zip_exe a -mpass=10 "api.pvpgn.pro_${version}_$arch.zip" .\$dir\*
+	# create zip archive in the root (in new window, separate thread)
+	# mx=9 // max compression
+	# mmt=8 // use multithreading
+	start $zip_exe "a -mx=9 -mmt=on api.pvpgn.pro_${version}_$arch.zip .\$dir\*"
 }
 
 

@@ -12,7 +12,7 @@ For more info see [Wiki](https://github.com/pvpgn/api.pvpgn.pro/wiki)
 
 ## Docker
 
-`docker run -p 8080:80 harpywar/api.pvpgn.pro:latest`
+`docker run -d -p 8080:80 harpywar/api.pvpgn.pro:latest`
 
 ## Binaries
 
